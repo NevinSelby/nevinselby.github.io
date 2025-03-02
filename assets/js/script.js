@@ -339,6 +339,7 @@ const knowledgeBase = [
   { question: "projects he has worked in", answer: "Sure! Nevin's key projects include AutoML-ify (an ML automation tool), Not Your Basic Weather Prediction (real-time forecasting), and WhatsApp Chat Analysis (message insights)." },
   { question: "give me a list of projects nevin has worked on", answer: "Nevin has worked on projects such as AutoML-ify, Not Your Basic Weather Prediction, WhatsApp Chat Analysis, and an Etsy price prediction model using CLIP embeddings." },
   { question: "what is nevin's most impressive project?", answer: "One of Nevin’s most impressive projects is AutoML-ify, an ML automation tool that simplifies model building with no human intervention." },
+  { question: "what are some of nevin's projects?", answer: "Nevin's key projects include AutoML-ify (an ML automation tool), Not Your Basic Weather Prediction (real-time forecasting), and WhatsApp Chat Analysis (message insights)." },
 
   // Research
   { question: "does nevin have research experience?", answer: "Yes, Nevin has conducted research in AI, active learning, and NLP at Wisconsin Institute for Discovery and UW College of Agricultural & Life Sciences." },
@@ -384,8 +385,8 @@ function enhancedCosineSimilarity(userVector, knowledgeVector) {
   // Define important keywords with higher weights
   const keywordWeights = {
     'machine': 1.5, 'learning': 1.5, 'data': 1.3, 'science': 1.3, 'python': 1.4,
-    'skills': 1.3, 'experience': 1.3, 'project': 1.3, 'projects': 1.3,
-    'education': 1.2, 'work': 1.2, 'nevin': 1.5
+    'skills': 1.4, 'experience': 1.4, 'project': 1.4, 'projects': 1.4,
+    'education': 1.3, 'work': 1.3, 'nevin': 1.5
   };
   
   // Get all unique words from both vectors
