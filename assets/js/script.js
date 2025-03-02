@@ -386,7 +386,7 @@ function enhancedCosineSimilarity(userVector, knowledgeVector) {
   const keywordWeights = {
     'machine': 1.5, 'learning': 1.5, 'data': 1.3, 'science': 1.3, 'python': 1.4,
     'skills': 1.4, 'experience': 1.4, 'project': 1.4, 'projects': 1.4,
-    'education': 1.3, 'work': 1.3, 'nevin': 1.5
+    'education': 1.3, 'work': 1.3, 'nevin': 1.3, 'he': 1.3, 'his': 1.3
   };
   
   // Get all unique words from both vectors
