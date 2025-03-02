@@ -174,7 +174,124 @@ const knowledgeBase = [
   { question: "contact information", answer: "You can reach Nevin at nselby@wisc.edu or +1 (608) 239-6451. You can also check out his LinkedIn profile at linkedin.com/in/nevinselby or GitHub at github.com/nevinselby." },
   { question: "phone number", answer: "Nevin's phone number is +1 (608) 239-6451." },
   { question: "email address", answer: "Nevin's email address is nselby@wisc.edu." },
+
+  // Education
+  { question: "education", answer: "Nevin has a Master's in Data Science from University of Wisconsin-Madison (2023-2025) with a 3.70/4.0 GPA and a Bachelor's in Computer Science from Indian Institute of Information Technology, Kottayam (2019-2023) with a 9.15/10.0 GPA." },
+  { question: "where did nevin study", answer: "Nevin completed his Master's in Data Science at University of Wisconsin-Madison and his Bachelor's in Computer Science at Indian Institute of Information Technology, Kottayam." },
+  { question: "gpa", answer: "Nevin maintained a 3.70/4.0 GPA in his Master's program at UW-Madison and a 9.15/10.0 GPA in his Bachelor's program at IIIT Kottayam." },
+  { question: "masters gpa", answer: "Nevin's Master's GPA at UW-Madison is 3.70/4.0." },
+  { question: "bachelors gpa", answer: "Nevin's Bachelor's GPA at IIIT Kottayam is 9.15/10.0." },
+  { question: "coursework", answer: "Nevin's Master's coursework includes Machine Learning Systems, Deep Learning, Statistical Models, Data Visualization, SQL & Databases, and Business Analytics. His Bachelor's coursework covered Machine Learning, Data Structures, Cloud Computing, and Statistical Learning." },
+  { question: "masters coursework", answer: "Nevin's Master's coursework at UW-Madison includes Machine Learning Systems, Deep Learning, Statistical Models, Distributed Systems, Data Visualization, SQL & Databases, and Business Analytics." },
+  { question: "bachelors coursework", answer: "Nevin's Bachelor's coursework at IIIT Kottayam included Machine Learning, Data Structures, Cloud Computing, Statistical Learning, and Data Mining." },
+  { question: "masters degree", answer: "Nevin is pursuing a Master of Science in Data Science from the University of Wisconsin-Madison, expected to graduate in May 2025." },
+  { question: "bachelors degree", answer: "Nevin holds a Bachelor of Technology in Computer Science from the Indian Institute of Information Technology, Kottayam, completed in May 2023." },
+  { question: "when did nevin start masters", answer: "Nevin started his Master's program at UW-Madison in Fall 2023 (September 2023)." },
+  { question: "when did nevin graduate bachelors", answer: "Nevin graduated with his Bachelor's degree from IIIT Kottayam in May 2023." },
+  { question: "bachelors final year project", answer: "For his Bachelor's final year project, Nevin developed an advanced machine learning system that focused on computer vision applications. The project demonstrated his early expertise in AI technologies and laid the foundation for his graduate studies in Data Science." },
+  { question: "final year project", answer: "Nevin's Bachelor's final year project involved developing a computer vision application using deep learning techniques. He implemented various CNN architectures and demonstrated practical applications of AI in real-world scenarios." },
+  { question: "thesis", answer: "Nevin's Master's program at UW-Madison is course-based and doesn't require a thesis. However, his academic projects demonstrate significant research and practical applications in machine learning and data science." },
   
+  // Visa Status and Work Authorization
+  { question: "visa status", answer: "Nevin is currently on an F-1 student visa in the United States while completing his Master's degree at UW-Madison." },
+  { question: "work authorization", answer: "Nevin is authorized to work in the US with his F-1 visa status through OPT and potentially 2 years of STEM OPT extension (total 3 years). He may require work visa sponsorship for long-term employment in the US. He is also authorized to work in India without restrictions." },
+  { question: "can nevin work in us", answer: "Yes, Nevin can work in the US through F-1 OPT (Optional Practical Training) for 1 year, with eligibility for an additional 2 years of STEM OPT extension due to his Data Science degree. For long-term employment, he may require H-1B or other work visa sponsorship." },
+  { question: "need sponsorship", answer: "Nevin has work authorization through F-1 OPT and STEM OPT (potentially up to 3 years total), but would require visa sponsorship for long-term employment in the US beyond that period." },
+  { question: "when did nevin come to us", answer: "Nevin came to the United States in Fall 2023 (September 2023) to pursue his Master's degree at the University of Wisconsin-Madison." },
+  { question: "OPT", answer: "Nevin is eligible for 1 year of OPT (Optional Practical Training) plus 2 additional years of STEM OPT extension due to his Data Science degree, allowing for up to 3 years of work authorization in the US after completing his Master's program." },
+  { question: "citizenship", answer: "Nevin is an Indian citizen currently in the US on an F-1 student visa while pursuing his Master's degree." },
+  { question: "international student", answer: "Yes, Nevin is an international student from India studying at the University of Wisconsin-Madison on an F-1 visa." },
+  
+  // Work Experience
+  { question: "work experience", answer: "Nevin's work experience includes: Data Science Intern at Wisconsin School of Business (using ML, NLP, ETL pipelines), Assistant in AI/Data Research at UW College of Agricultural & Life Sciences (implementing CV models, AWS pipelines), and Graduate Researcher at Wisconsin Institute for Discovery (developing active learning systems)." },
+  { question: "professional experience", answer: "Nevin has worked as a Data Science Intern analyzing Starbucks unionization impacts using GPT-3.5 and BERT, an AI/Data Research Assistant developing ML models for cranberry classification using ResNet50 and YOLOv8, and a Graduate Researcher implementing active learning pipelines with CLIP and Stable Diffusion." },
+  { question: "current job", answer: "Nevin is currently a Data Science Intern at Wisconsin School of Business where he investigates Starbucks unionization impact using NLP techniques, optimizes GPT API costs, and develops ETL pipelines." },
+  { question: "wisconsin school of business", answer: "At Wisconsin School of Business, Nevin analyzed Starbucks unionization impact using GPT-3.5-Turbo and BERT, streamlined SQL-driven ETL pipelines, optimized GPT API costs by 25%, and used CLIP-based multimodal embeddings for Etsy artwork price prediction. He also developed interactive Tableau dashboards visualizing trends in customer feedback." },
+  { question: "wisconsin school of business tools", answer: "At Wisconsin School of Business, Nevin used GPT-3.5-Turbo, BERT for fine-tuning, SQL for ETL pipelines, CLIP for multimodal embeddings, Tableau for dashboards, and prompt optimization techniques for GPT API cost reduction." },
+  { question: "uw college", answer: "At UW College of Agricultural & Life Sciences, Nevin engineered cranberry classification models using ResNet50 improving accuracy by 25%, implemented YOLOv8 for object detection with 15% enhanced precision, built AWS ML pipelines with S3 and SageMaker integrated with MLflow, and performed time-series analysis on cranberry growth patterns." },
+  { question: "uw college tools", answer: "At UW College of Agricultural & Life Sciences, Nevin used ResNet50, YOLOv8, semi-supervised learning with CLIP, Albumentations for data augmentation, AWS (S3, SageMaker), MLflow for model tracking, and Matplotlib/Seaborn for visualization." },
+  { question: "wisconsin institute for discovery", answer: "At Wisconsin Institute for Discovery, Nevin implemented an automated active learning pipeline with CLIP and Stable Diffusion, reducing manual annotation by 80%, innovated an image labeling system that refined CLIP's predictions, and benchmarked model performance against 20+ research papers." },
+  { question: "wisconsin institute for discovery tools", answer: "At Wisconsin Institute for Discovery, Nevin used CLIP, Stable Diffusion, active learning techniques, and benchmarking methodologies while working with ImageNet, CIFAR-10, and CIFAR-100 datasets." },
+  
+  // Projects
+  { question: "projects", answer: "Nevin's key projects include: AutoML-ify (an automated ML pipeline using Streamlit, RandomizedSearchCV, and Plotly), Not Your Basic Weather Prediction (XGBoost, MLflow, GitHub Actions), and WhatsApp Chat Analysis (interactive dashboard for analyzing chat data)." },
+  { question: "automl", answer: "AutoML-ify is an innovative end-to-end ML pipeline using Streamlit that enables users to upload datasets and automate data cleaning, preprocessing, EDA, and model selection. It uses RandomizedSearchCV for hyperparameter tuning across 10+ ML algorithms (XGBoost, SVM), Pickle for model persistence, and Plotly for interactive visualizations." },
+  { question: "automl tools", answer: "For the AutoML-ify project, Nevin used Streamlit for the frontend, Pandas for data manipulation, Scikit-learn for preprocessing and modeling, RandomizedSearchCV for hyperparameter tuning, XGBoost and SVM among 10+ algorithms, Pickle for model persistence, and Plotly for interactive visualizations." },
+  { question: "weather prediction", answer: "Not Your Basic Weather Prediction is a weather forecasting system using XGBoost, Streamlit, and MLflow that provides real-time temperature forecasting with ±2°C accuracy. It features an automated MLOps pipeline with GitHub Actions for daily data drift checks and model retraining when drift exceeds a predefined threshold." },
+  { question: "weather prediction tools", answer: "For the Weather Prediction project, Nevin used XGBoost as the primary algorithm, Streamlit for the user interface, MLflow for tracking experiments, GitHub Actions for CI/CD and automation, and data drift monitoring techniques." },
+  { question: "whatsapp chat", answer: "The WhatsApp Chat Analysis project is an interactive dashboard that analyzes WhatsApp chat data, extracting insights on user activity, peak messaging times, emoji usage, and engagement levels from over 100,000 messages. It processes up to 200MB of exported chat logs with an average processing time under 10 seconds." },
+  { question: "whatsapp chat tools", answer: "For the WhatsApp Chat Analysis project, Nevin used Python for text parsing and analysis, efficient string operations and caching for performance optimization, and visualization libraries to display user activity, messaging patterns, and emoji usage trends." },
+  { question: "github", answer: "You can find Nevin's projects on his GitHub: github.com/nevinselby" },
+  { question: "most impressive project", answer: "Nevin's most impressive project is AutoML-ify, which automates the entire machine learning pipeline from data cleaning to model deployment using Streamlit, multiple ML algorithms, and interactive visualizations, demonstrating his ability to build end-to-end data science solutions." },
+  
+  // Skills and Tools
+  { question: "what are nevin's skills", answer: "Nevin's skills include Machine Learning (PyTorch, TensorFlow, Scikit-learn, XGBoost), MLOps (Docker, Kubernetes, MLflow), Computer Vision (CLIP, Stable Diffusion, ResNet, YOLO), NLP (BERT, GPT), Data Analysis & Visualization (SQL, Tableau, Power BI), Cloud technologies (AWS), and programming in Python, SQL, C++, and JavaScript." },
+  { question: "technical skills", answer: "Nevin is skilled in Python, PyTorch, TensorFlow, SQL, AWS (SageMaker, Lambda, S3), Docker, Kubernetes, MLflow, CLIP, Stable Diffusion, BERT, GPT, ResNet, YOLO, Tableau, and Power BI. His strongest skills are in Python, PyTorch, and AWS." },
+  { question: "programming languages", answer: "Nevin is proficient in Python (expert level), SQL (advanced), C++ (intermediate), and JavaScript (intermediate). Python is his strongest programming language, which he uses extensively for ML and data science work." },
+  { question: "python libraries", answer: "Nevin is proficient with many Python libraries including PyTorch, TensorFlow, Scikit-learn, Pandas, NumPy, Matplotlib, Seaborn, Plotly, Transformers, Streamlit, Flask, and automation libraries. He's especially strong with PyTorch, Pandas, and Scikit-learn." },
+  { question: "machine learning", answer: "Nevin has expertise in various ML areas including PyTorch, TensorFlow, Scikit-learn, Transformers, LLMs (worked with GPT-3.5), Computer Vision (CLIP, Stable Diffusion, ResNet50, YOLOv8), and NLP (BERT fine-tuning). His strongest ML skills are in computer vision and working with transformer-based models." },
+  { question: "machine learning frameworks", answer: "Nevin is experienced with PyTorch (expert), TensorFlow (advanced), Scikit-learn (expert), Hugging Face Transformers (advanced), XGBoost (advanced), and has implemented various CNN architectures like ResNet and YOLO. PyTorch is his preferred deep learning framework." },
+  { question: "deep learning", answer: "Nevin has deep learning experience implementing ResNet50 for cranberry classification, using CLIP and Stable Diffusion for active learning pipelines, fine-tuning BERT for sentiment analysis, and working with multimodal embeddings. He's strongest in computer vision and transformers applications." },
+  { question: "computer vision", answer: "Nevin's computer vision experience includes developing ResNet50 models for cranberry classification (25% accuracy improvement), implementing YOLOv8 for object detection (15% precision enhancement), using CLIP for image labeling, and Stable Diffusion for data augmentation. He's implemented custom data augmentation using Albumentations." },
+  { question: "nlp", answer: "Nevin's NLP experience includes fine-tuning BERT models for sentiment analysis on customer reviews, using GPT-3.5-Turbo for text generation and analysis, implementing prompt optimization techniques for LLMs, and analyzing WhatsApp chat data for user behavior insights." },
+  { question: "data analysis", answer: "Nevin's data analysis skills include SQL (advanced querying and ETL), Tableau and Power BI for visualization, Matplotlib/Seaborn/Plotly for Python-based visualization, A/B Testing, Hypothesis Testing, Regression Analysis, and time-series analysis. He's especially strong in SQL-based analysis and interactive visualizations." },
+  { question: "cloud", answer: "Nevin has experience with AWS services including SageMaker, Lambda, and S3. He's implemented end-to-end ML pipelines on AWS integrated with MLflow, enabling seamless model versioning and deployment. He's also worked with data platforms like Snowflake and PostgreSQL." },
+  { question: "aws experience", answer: "Nevin has substantial AWS experience, having worked with SageMaker for ML model deployment, S3 for data storage, Lambda for serverless computing, and integrated these services with MLflow for model tracking. He's implemented complete ML pipelines on AWS for production use cases." },
+  { question: "databases", answer: "Nevin is experienced with SQL databases including PostgreSQL, data warehousing solutions like Snowflake, and has built ETL pipelines for data transformation and loading. He's proficient in advanced SQL operations and database optimization techniques." },
+  { question: "mlops", answer: "Nevin's MLOps experience includes working with Docker, Kubernetes, MLflow, Weights & Biases, and Git. He's built automated ML pipelines with GitHub Actions for continuous model monitoring, data drift detection, and automated retraining when needed." },
+  { question: "data visualization", answer: "Nevin is skilled in data visualization using Tableau, Power BI, Matplotlib, Seaborn, and Plotly. He's created interactive dashboards for customer sentiment analysis, cranberry growth patterns, and WhatsApp chat insights." },
+  { question: "strongest skills", answer: "Nevin's strongest technical skills are in Python programming, PyTorch for deep learning, computer vision applications (especially with CLIP and ResNet), MLOps automation, and AWS cloud implementations. He excels at building end-to-end ML pipelines from data processing to deployment." },
+  { question: "most proficient tools", answer: "Nevin is most proficient with Python, PyTorch, Scikit-learn, Pandas, AWS SageMaker, SQL, Tableau, and Git. He's particularly strong with PyTorch for deep learning implementations and AWS for cloud-based ML solutions." },
+  { question: "favorite technologies", answer: "Nevin's favorite technologies to work with are PyTorch for deep learning research, CLIP for multimodal applications, AWS SageMaker for ML deployment, and Streamlit for building interactive data applications. He particularly enjoys working with computer vision models and transformer architectures." },
+  
+  // Certifications
+  { question: "certifications", answer: "Nevin holds several certifications including AWS Machine Learning Foundations 2022 (Udacity), Computer Vision (Kaggle), Intro to Deep Learning (Kaggle), and NLP Bootcamp (AI Planet). These certifications complement his formal education and demonstrate his commitment to continuous learning." },
+  { question: "aws certification", answer: "Nevin has completed the AWS Machine Learning Foundations certification through Udacity in 2022, demonstrating his knowledge of cloud-based ML implementations and AWS services for data science workflows." },
+  { question: "kaggle certifications", answer: "Nevin has earned Kaggle certifications in Computer Vision and Intro to Deep Learning, validating his expertise in these domains through practical assessments and competitions." },
+  { question: "nlp certification", answer: "Nevin completed the NLP Bootcamp certification from AI Planet, covering topics like text preprocessing, sentiment analysis, named entity recognition, and implementing transformer models." },
+  { question: "online courses", answer: "Besides his formal education, Nevin has completed online courses and certifications in AWS Machine Learning, Computer Vision, Deep Learning, and NLP from platforms like Udacity, Kaggle, and AI Planet." },
+  
+  // Personal Interests
+  { question: "youtube channel", answer: "Nevin runs a YouTube vlogging channel where he shares his adventures and personal experiences. His channel focuses on lifestyle content and day-in-the-life style videos, showing his life outside of his technical work." },
+  { question: "youtube", answer: "Nevin has a YouTube channel dedicated to vlogging and sharing his adventures. It's a creative outlet separate from his technical work where he documents his experiences and travels." },
+  { question: "medium", answer: "Nevin writes technical articles on Medium, sharing his knowledge about data science, machine learning, and programming concepts. His articles cover topics from beginner to advanced levels in AI and data science." },
+  { question: "medium articles", answer: "On Medium, Nevin publishes technical articles covering topics like data science methodologies, ML model optimization, coding best practices, MLOps, computer vision techniques, and emerging technology trends." },
+  { question: "hobbies", answer: "Besides his technical work, Nevin enjoys creating content for his YouTube vlogging channel, writing technical articles on Medium, traveling, photography, and exploring new technologies in his spare time." },
+  
+  // Research and Academic Interests
+  { question: "research", answer: "Nevin has research experience at Wisconsin Institute for Discovery working on automated active learning pipelines using CLIP and Stable Diffusion, and at UW College of Agricultural & Life Sciences researching cranberry phenology classification and optimization." },
+  { question: "research interests", answer: "Nevin's research interests include computer vision, active learning methodologies, multimodal learning with CLIP, application of transformer models, NLP, and applying AI to real-world problems like agricultural optimization." },
+  { question: "academic strengths", answer: "Nevin's academic strengths include machine learning theory, statistics, algorithm development, research methodology, and translating complex concepts into practical implementations. He maintained high GPAs in both his Bachelor's (9.15/10.0) and Master's (3.70/4.0) programs." },
+  
+  // Specific Technical Questions
+  { question: "nlp experience", answer: "Nevin has NLP experience through his work at Wisconsin School of Business where he used GPT-3.5-Turbo and fine-tuned BERT models on customer reviews for sentiment analysis, optimized prompts to reduce API costs by 25%, and analyzed Starbucks unionization impact through text analysis." },
+  { question: "computer vision experience", answer: "Nevin's computer vision experience includes developing ResNet50 and YOLOv8 models for cranberry classification and object detection, implementing CLIP and Stable Diffusion for image labeling and data augmentation, custom augmentation techniques with Albumentations, and semi-supervised learning approaches." },
+  { question: "mlops experience", answer: "Nevin's MLOps experience includes setting up end-to-end ML pipelines on AWS with SageMaker and MLflow, implementing automated model monitoring and retraining with GitHub Actions, working with Docker and Kubernetes for containerization, and using versioning tools for model management." },
+  { question: "data engineering", answer: "Nevin's data engineering experience includes building SQL-driven ETL pipelines with 90% reduction in manual intervention, working with data warehousing solutions like Snowflake, implementing data transformation workflows, and setting up automated data processing systems for ML model training." },
+  
+  // Projects - Additional Details
+  { question: "automl details", answer: "The AutoML-ify project handles data cleaning (missing values, outliers), feature engineering (encoding, scaling), automated EDA with visual reports, model selection across 10+ algorithms, hyperparameter tuning with RandomizedSearchCV, cross-validation, model evaluation with multiple metrics, and one-click deployment. It reduced the typical ML workflow from days to minutes." },
+  { question: "weather prediction details", answer: "The Weather Prediction project uses historical weather data, geolocation information, and seasonal patterns for forecasting. It employs XGBoost as the primary algorithm with feature engineering for temporal patterns, implements automated drift detection to identify when predictions become less accurate, and uses MLflow to track experiment results and model versions." },
+  { question: "whatsapp chat details", answer: "The WhatsApp Chat Analysis project preprocesses raw chat exports, handles multi-format messages including media and links, analyzes messaging patterns by time of day and day of week, tracks emoji usage and sentiment trends, identifies group dynamics and participant engagement levels, and visualizes all insights through an interactive dashboard." },
+  
+  // Strengths and Work Style
+  { question: "strengths", answer: "Nevin's key strengths include his deep technical knowledge in ML/AI, ability to quickly adopt new technologies, end-to-end project implementation skills, strong mathematical foundation, communication skills evidenced by his Medium articles, and experience across multiple domains of AI including computer vision, NLP, and MLOps." },
+  { question: "work style", answer: "Nevin has a methodical approach to problem-solving, values collaboration as shown in his work with cranberry growers, demonstrates research rigor through his benchmarking against 20+ papers, and has a track record of delivering measurable improvements (25% accuracy increase, 90% reduction in manual processes) in his projects." },
+  { question: "communication skills", answer: "Nevin has strong communication skills demonstrated through his technical writing on Medium, collaborative work with domain experts like cranberry growers, ability to translate complex ML concepts into business insights, and content creation on his YouTube channel." },
+  
+  // Career Goals
+  { question: "career goals", answer: "Nevin aims to further develop his expertise in applied machine learning, particularly in computer vision and multimodal learning, while building scalable AI systems that solve real-world problems. He's interested in roles that combine research innovation with practical implementation." },
+  { question: "future plans", answer: "After completing his Master's in May 2025, Nevin plans to work in an AI/ML role that allows him to apply his technical skills to challenging problems, potentially in computer vision or multimodal learning applications. He's open to opportunities in the US (with his OPT/STEM OPT work authorization) or internationally." },
+  
+  // Additional Skills and Knowledge
+  { question: "big data", answer: "Nevin has experience with big data technologies and has worked with large datasets in his projects, including processing 200MB chat logs and working with ImageNet for computer vision research." },
+  { question: "devops", answer: "Nevin has DevOps experience through his MLOps work, including CI/CD implementation with GitHub Actions, containerization with Docker, and orchestration with Kubernetes." },
+  { question: "agile", answer: "Nevin is familiar with Agile development methodologies and has applied them in his project work, particularly when collaborating on research initiatives and developing software solutions." },
+  { question: "leadership", answer: "Nevin has demonstrated leadership through his project implementations, guiding technical decisions, and collaborating with stakeholders like cranberry growers to ensure solutions meet practical needs." },
+  
+  // Fallback Response
+  { question: "fallback", answer: "I don't have specific information about that aspect of Nevin's background. Would you like to know about his education, work experience, technical skills, projects, or visa status instead?" },
+
   // Education
   { question: "education", answer: "Nevin has a Master's in Data Science from University of Wisconsin-Madison (2023-2025) with a 3.70/4.0 GPA and a Bachelor's in Computer Science from Indian Institute of Information Technology (2019-2023) with a 9.15/10.0 GPA." },
   { question: "where did nevin study", answer: "Nevin completed his Master's in Data Science at University of Wisconsin-Madison and his Bachelor's in Computer Science at Indian Institute of Information Technology." },
@@ -384,9 +501,42 @@ function textToVector(text) {
 function enhancedCosineSimilarity(userVector, knowledgeVector) {
   // Define important keywords with higher weights
   const keywordWeights = {
-    'machine': 1.5, 'learning': 1.5, 'data': 1.3, 'science': 1.3, 'python': 1.4,
-    'skills': 1.4, 'experience': 1.4, 'project': 1.4, 'projects': 1.4,
-    'education': 1.3, 'work': 1.3, 'nevin': 1.3, 'he': 1.3, 'his': 1.3
+    // Education keywords
+    'education': 1.5, 'degree': 1.5, 'masters': 1.5, 'bachelors': 1.5, 'gpa': 1.5,
+    'coursework': 1.4, 'university': 1.3, 'wisconsin': 1.3, 'madison': 1.3, 'indian': 1.3,
+    'institute': 1.3, 'kottayam': 1.3, 'graduate': 1.3, 'study': 1.3, 'major': 1.3,
+    
+    // Technical skills
+    'machine': 1.5, 'learning': 1.5, 'data': 1.4, 'science': 1.4, 'python': 1.5,
+    'pytorch': 1.5, 'tensorflow': 1.4, 'deep': 1.4, 'skills': 1.4, 'proficient': 1.4,
+    'ml': 1.5, 'ai': 1.5, 'nlp': 1.5, 'computer': 1.4, 'vision': 1.4,
+    'programming': 1.3, 'tools': 1.3, 'frameworks': 1.4, 'aws': 1.4, 'cloud': 1.3,
+    'strongest': 1.5, 'best': 1.4, 'expert': 1.5, 'advanced': 1.4, 'clip': 1.4,
+    'bert': 1.4, 'gpt': 1.4, 'sql': 1.4, 'database': 1.3, 'visualization': 1.3,
+    'tableau': 1.3, 'powerbi': 1.3, 'docker': 1.3, 'kubernetes': 1.3, 'mlops': 1.4,
+    
+    // Experience
+    'experience': 1.4, 'work': 1.4, 'job': 1.4, 'intern': 1.4, 'internship': 1.4,
+    'research': 1.4, 'researcher': 1.4, 'assistant': 1.3, 'professional': 1.3,
+    'current': 1.4, 'wisconsin': 1.3, 'business': 1.3, 'agricultural': 1.3, 'discovery': 1.3,
+    
+    // Projects
+    'project': 1.4, 'projects': 1.4, 'automl': 1.5, 'weather': 1.4, 'whatsapp': 1.4,
+    'github': 1.4, 'streamlit': 1.3, 'xgboost': 1.3, 'mlflow': 1.3, 'analysis': 1.3,
+    
+    // Visa and work authorization
+    'visa': 1.6, 'status': 1.5, 'f1': 1.6, 'authorization': 1.6, 'opt': 1.6,
+    'stem': 1.6, 'sponsor': 1.5, 'sponsorship': 1.5, 'international': 1.5, 'student': 1.4,
+    'work': 1.5, 'authorized': 1.6, 'legally': 1.5, 'us': 1.4, 'india': 1.4,
+    
+    // Personal
+    'nevin': 1.5, 'youtube': 1.4, 'channel': 1.3, 'medium': 1.4, 'articles': 1.3,
+    'hobbies': 1.3, 'interests': 1.3, 'vlog': 1.3, 'vlogging': 1.3, 'technical': 1.3,
+    'writing': 1.3,
+    
+    // Certifications
+    'certification': 1.5, 'certifications': 1.5, 'certified': 1.5, 'udacity': 1.4,
+    'kaggle': 1.4, 'bootcamp': 1.3
   };
   
   // Get all unique words from both vectors
