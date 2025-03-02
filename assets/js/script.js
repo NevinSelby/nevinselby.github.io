@@ -181,9 +181,9 @@ const knowledgeBase = [
   { question: "gpa", answer: "Nevin maintained a 3.70/4.0 GPA in his Master's program at UW-Madison and a 9.15/10.0 GPA in his Bachelor's program at IIIT Kottayam." },
   { question: "masters gpa", answer: "Nevin's Master's GPA at UW-Madison is 3.70/4.0." },
   { question: "bachelors gpa", answer: "Nevin's Bachelor's GPA at IIIT Kottayam is 9.15/10.0." },
-  { question: "coursework", answer: "Nevin's Master's coursework includes Machine Learning Systems, Deep Learning, Statistical Models, Data Visualization, SQL & Databases, and Business Analytics. His Bachelor's coursework covered Machine Learning, Data Structures, Cloud Computing, and Statistical Learning." },
-  { question: "masters coursework", answer: "Nevin's Master's coursework at UW-Madison includes Machine Learning Systems, Deep Learning, Statistical Models, Distributed Systems, Data Visualization, SQL & Databases, and Business Analytics." },
-  { question: "bachelors coursework", answer: "Nevin's Bachelor's coursework at IIIT Kottayam included Machine Learning, Data Structures, Cloud Computing, Statistical Learning, and Data Mining." },
+  { question: "coursework", answer: "Nevin's Master's coursework includes Machine Learning, Statistical Analysis, Statistical Models, Big Data Systems, and Data Visualization. His Bachelor's coursework covered Machine Learning, Data Structures, Cloud Computing, and Statistical Learning." },
+  { question: "masters coursework", answer: "Nevin's Master's coursework at UW-Madison includes Machine Learning, Statistical Analysis, Statistical Models, Big Data Systems, and Data Visualization" },
+  { question: "bachelors coursework", answer: "Nevin's Bachelor's coursework at IIIT Kottayam included Machine Learning, Data Structures, Cloud Computing, and Statistical Learning" },
   { question: "masters degree", answer: "Nevin is pursuing a Master of Science in Data Science from the University of Wisconsin-Madison, expected to graduate in May 2025." },
   { question: "bachelors degree", answer: "Nevin holds a Bachelor of Technology in Computer Science from the Indian Institute of Information Technology, Kottayam, completed in May 2023." },
   { question: "when did nevin start masters", answer: "Nevin started his Master's program at UW-Madison in Fall 2023 (September 2023)." },
@@ -296,7 +296,7 @@ const knowledgeBase = [
   { question: "education", answer: "Nevin has a Master's in Data Science from University of Wisconsin-Madison (2023-2025) with a 3.70/4.0 GPA and a Bachelor's in Computer Science from Indian Institute of Information Technology (2019-2023) with a 9.15/10.0 GPA." },
   { question: "where did nevin study", answer: "Nevin completed his Master's in Data Science at University of Wisconsin-Madison and his Bachelor's in Computer Science at Indian Institute of Information Technology." },
   { question: "gpa", answer: "Nevin maintained a 3.70/4.0 GPA in his Master's program and a 9.15/10.0 GPA in his Bachelor's program." },
-  { question: "coursework", answer: "Nevin's Master's coursework includes Machine Learning Systems, Deep Learning, Statistical Models, Data Visualization, SQL & Databases, and Business Analytics. His Bachelor's coursework covered Machine Learning, Data Structures, Cloud Computing, and Statistical Learning." },
+  { question: "coursework", answer: "Nevin's Master's coursework includes Machine Learning, Statistical Analysis, Statistical Models, Big Data Systems, and Data Visualization. His Bachelor's coursework covered Machine Learning, Data Structures, Cloud Computing, and Statistical Learning." },
   
   // Work Experience
   { question: "work experience", answer: "Nevin's work experience includes: Data Science Intern at Wisconsin School of Business, Assistant in AI/Data Research at UW College of Agricultural & Life Sciences, and Graduate Researcher at Wisconsin Institute for Discovery." },
@@ -368,7 +368,7 @@ const knowledgeBase = [
 
   // Additional education details
   { question: "what is nevin's field of study", answer: "Nevin's field of study is Data Science, with a strong foundation in Machine Learning and Artificial Intelligence." },
-  { question: "did nevin take deep learning courses", answer: "Yes, he studied Deep Learning, Machine Learning Systems, and Statistical Models as part of his coursework." },
+  { question: "did nevin take deep learning courses", answer: "Yes, he studied Machine Learning, Statistical Analysis, Statistical Models, Big Data Systems, and Data Visualization as part of his coursework." },
 
   // Work Authorization & Visa
   { question: "visa status", answer: "Nevin is currently on an F-1 Visa, with work authorization under STEM OPT." },
