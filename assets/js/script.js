@@ -556,7 +556,7 @@ const knowledgeBase = [
   { question: "what is nevin's experience with ITOM", answer: "Nevin has not worked on ITOM-specific projects, but he is interested in exploring how AI can enhance IT operations management systems." },
   { question: "does nevin have experience with ITAM", answer: "Nevin has not worked on ITAM-specific projects, but he is interested in exploring how AI can optimize IT asset management systems." },
   { question: "what is nevin's experience with ITSM", answer: "Nevin has not worked on ITSM-specific projects, but he is interested in exploring how AI can improve IT service management systems." },
-  
+
   // Fun Questions
   { question: "does nevin like AI", answer: "Absolutely! Nevin is passionate about AI and enjoys researching machine learning advancements." },
   { question: "what programming languages does nevin know", answer: "Python, SQL, C++, and JavaScript." },
@@ -597,7 +597,9 @@ function enhancedCosineSimilarity(userVector, knowledgeVector) {
     'education': 1.5, 'degree': 1.5, 'masters': 1.5, 'bachelors': 1.5, 'gpa': 1.5,
     'coursework': 1.4, 'university': 1.3, 'wisconsin': 1.3, 'madison': 1.3, 'indian': 1.3,
     'institute': 1.3, 'kottayam': 1.3, 'graduate': 1.3, 'study': 1.3, 'major': 1.3,
-    
+    'academic': 1.3, 'background': 1.3, 'qualifications': 1.4, 'subjects': 1.3, 'thesis': 1.3,
+    'final year project': 1.4, 'research': 1.4, 'field of study': 1.4,
+
     // Technical skills
     'machine': 1.5, 'learning': 1.5, 'data': 1.4, 'science': 1.4, 'python': 1.5,
     'pytorch': 1.5, 'tensorflow': 1.4, 'deep': 1.4, 'skills': 1.4, 'proficient': 1.4,
@@ -606,31 +608,101 @@ function enhancedCosineSimilarity(userVector, knowledgeVector) {
     'strongest': 1.5, 'best': 1.4, 'expert': 1.5, 'advanced': 1.4, 'clip': 1.4,
     'bert': 1.4, 'gpt': 1.4, 'sql': 1.4, 'database': 1.3, 'visualization': 1.3,
     'tableau': 1.3, 'powerbi': 1.3, 'docker': 1.3, 'kubernetes': 1.3, 'mlops': 1.4,
-    
+    'big data': 1.4, 'devops': 1.3, 'agile': 1.3, 'leadership': 1.3, 'communication': 1.3,
+    'automation': 1.3, 'time-series': 1.3, 'active learning': 1.4, 'transformer': 1.4,
+    'fine-tuning': 1.4, 'data augmentation': 1.3, 'semi-supervised': 1.3, 'benchmarking': 1.3,
+    'a/b testing': 1.3, 'hypothesis testing': 1.3, 'regression': 1.3, 'data cleaning': 1.3,
+    'feature engineering': 1.3, 'model deployment': 1.4, 'model monitoring': 1.4,
+    'data drift': 1.4, 'ci/cd': 1.3, 'version control': 1.3, 'git': 1.3, 'collaboration': 1.3,
+    'problem-solving': 1.4, 'innovation': 1.4, 'scalability': 1.3, 'performance': 1.3,
+    'cost optimization': 1.3, 'real-time': 1.3, 'edge computing': 1.3, 'iot': 1.3,
+    'robotics': 1.3, 'game development': 1.3, 'mobile development': 1.3, 'web development': 1.3,
+    'apis': 1.3, 'microservices': 1.3, 'serverless': 1.3, 'cybersecurity': 1.3,
+    'blockchain': 1.3, 'quantum computing': 1.3, 'ar/vr': 1.3, '3d modeling': 1.3,
+    'gis': 1.3, 'bioinformatics': 1.3, 'finance': 1.3, 'healthcare': 1.3, 'education': 1.3,
+    'social impact': 1.3, 'sustainability': 1.3, 'climate science': 1.3, 'energy': 1.3,
+    'transportation': 1.3, 'retail': 1.3, 'e-commerce': 1.3, 'marketing': 1.3, 'sales': 1.3,
+    'customer service': 1.3, 'hr': 1.3, 'operations': 1.3, 'supply chain': 1.3, 'logistics': 1.3,
+    'manufacturing': 1.3, 'agriculture': 1.3, 'food tech': 1.3, 'fashion': 1.3,
+    'entertainment': 1.3, 'media': 1.3, 'journalism': 1.3, 'publishing': 1.3, 'gaming': 1.3,
+    'sports': 1.3, 'fitness': 1.3, 'wellness': 1.3, 'mental health': 1.3, 'edtech': 1.3,
+    'fintech': 1.3, 'insurtech': 1.3, 'proptech': 1.3, 'legal tech': 1.3, 'govtech': 1.3,
+    'civic tech': 1.3, 'nonprofit': 1.3, 'philanthropy': 1.3, 'social media': 1.3,
+    'influencer marketing': 1.3, 'content marketing': 1.3, 'seo': 1.3, 'sem': 1.3,
+    'ppc': 1.3, 'affiliate marketing': 1.3, 'email marketing': 1.3, 'crm': 1.3,
+    'erp': 1.3, 'scm': 1.3, 'plm': 1.3, 'hcm': 1.3, 'lms': 1.3, 'cms': 1.3,
+    'dam': 1.3, 'eam': 1.3, 'itsm': 1.3, 'itom': 1.3, 'itam': 1.3,
+
     // Experience
     'experience': 1.4, 'work': 1.4, 'job': 1.4, 'intern': 1.4, 'internship': 1.4,
     'research': 1.4, 'researcher': 1.4, 'assistant': 1.3, 'professional': 1.3,
     'current': 1.4, 'wisconsin': 1.3, 'business': 1.3, 'agricultural': 1.3, 'discovery': 1.3,
-    
+    'employment': 1.3, 'history': 1.3, 'role': 1.3, 'position': 1.3, 'career': 1.4,
+    'future plans': 1.4, 'goals': 1.4, 'aspirations': 1.3, 'leadership': 1.3,
+    'teamwork': 1.3, 'collaboration': 1.3, 'project management': 1.3, 'time management': 1.3,
+    'adaptability': 1.3, 'continuous learning': 1.3, 'open-source': 1.3, 'hackathons': 1.3,
+    'startups': 1.3, 'entrepreneurship': 1.3, 'data privacy': 1.3, 'ethical ai': 1.3,
+
     // Projects
     'project': 1.4, 'projects': 1.4, 'automl': 1.5, 'weather': 1.4, 'whatsapp': 1.4,
     'github': 1.4, 'streamlit': 1.3, 'xgboost': 1.3, 'mlflow': 1.3, 'analysis': 1.3,
-    
+    'portfolio': 1.3, 'impressive': 1.4, 'best': 1.4, 'favorite': 1.3, 'tools': 1.3,
+    'details': 1.3, 'implementation': 1.3, 'innovation': 1.4, 'scalable': 1.3,
+    'end-to-end': 1.4, 'automation': 1.3, 'interactive': 1.3, 'dashboard': 1.3,
+    'visualization': 1.3, 'data analysis': 1.3, 'machine learning': 1.5, 'deep learning': 1.4,
+    'computer vision': 1.4, 'nlp': 1.5, 'mlops': 1.4, 'cloud': 1.3, 'aws': 1.4,
+    'docker': 1.3, 'kubernetes': 1.3, 'ci/cd': 1.3, 'version control': 1.3, 'git': 1.3,
+
     // Visa and work authorization
     'visa': 1.6, 'status': 1.5, 'f1': 1.6, 'authorization': 1.6, 'opt': 1.6,
     'stem': 1.6, 'sponsor': 1.5, 'sponsorship': 1.5, 'international': 1.5, 'student': 1.4,
     'work': 1.5, 'authorized': 1.6, 'legally': 1.5, 'us': 1.4, 'india': 1.4,
-    
+    'citizenship': 1.5, 'nationality': 1.4, 'origin': 1.4, 'from': 1.3,
+
     // Personal
     'nevin': 1.5, 'youtube': 1.4, 'channel': 1.3, 'medium': 1.4, 'articles': 1.3,
     'hobbies': 1.3, 'interests': 1.3, 'vlog': 1.3, 'vlogging': 1.3, 'technical': 1.3,
-    'writing': 1.3,
-    
+    'writing': 1.3, 'age': 1.5, 'old': 1.5, 'years': 1.5, 'birthday': 1.3, 'born': 1.3,
+    'background': 1.3, 'bio': 1.3, 'introduction': 1.3, 'contact': 1.4, 'email': 1.4,
+    'phone': 1.4, 'linkedin': 1.4, 'github': 1.4, 'social media': 1.3, 'content creation': 1.3,
+    'photography': 1.3, 'traveling': 1.3, 'creative': 1.3, 'public speaking': 1.3,
+    'teaching': 1.3, 'mentoring': 1.3, 'communication': 1.3, 'problem-solving': 1.4,
+    'innovation': 1.4, 'research': 1.4, 'academic writing': 1.3, 'teamwork': 1.3,
+    'collaboration': 1.3, 'project management': 1.3, 'time management': 1.3,
+    'adaptability': 1.3, 'continuous learning': 1.3, 'open-source': 1.3, 'hackathons': 1.3,
+    'startups': 1.3, 'entrepreneurship': 1.3, 'data privacy': 1.3, 'ethical ai': 1.3,
+
     // Certifications
     'certification': 1.5, 'certifications': 1.5, 'certified': 1.5, 'udacity': 1.4,
-    'kaggle': 1.4, 'bootcamp': 1.3
-  };
-  
+    'kaggle': 1.4, 'bootcamp': 1.3, 'online courses': 1.3, 'aws': 1.4, 'computer vision': 1.4,
+    'deep learning': 1.4, 'nlp': 1.5, 'ai': 1.5, 'ml': 1.5, 'data science': 1.4,
+    'python': 1.5, 'pytorch': 1.5, 'tensorflow': 1.4, 'sql': 1.4, 'tableau': 1.3,
+    'powerbi': 1.3, 'docker': 1.3, 'kubernetes': 1.3, 'mlops': 1.4, 'big data': 1.4,
+    'devops': 1.3, 'agile': 1.3, 'leadership': 1.3, 'communication': 1.3,
+    'automation': 1.3, 'time-series': 1.3, 'active learning': 1.4, 'transformer': 1.4,
+    'fine-tuning': 1.4, 'data augmentation': 1.3, 'semi-supervised': 1.3, 'benchmarking': 1.3,
+    'a/b testing': 1.3, 'hypothesis testing': 1.3, 'regression': 1.3, 'data cleaning': 1.3,
+    'feature engineering': 1.3, 'model deployment': 1.4, 'model monitoring': 1.4,
+    'data drift': 1.4, 'ci/cd': 1.3, 'version control': 1.3, 'git': 1.3, 'collaboration': 1.3,
+    'problem-solving': 1.4, 'innovation': 1.4, 'scalability': 1.3, 'performance': 1.3,
+    'cost optimization': 1.3, 'real-time': 1.3, 'edge computing': 1.3, 'iot': 1.3,
+    'robotics': 1.3, 'game development': 1.3, 'mobile development': 1.3, 'web development': 1.3,
+    'apis': 1.3, 'microservices': 1.3, 'serverless': 1.3, 'cybersecurity': 1.3,
+    'blockchain': 1.3, 'quantum computing': 1.3, 'ar/vr': 1.3, '3d modeling': 1.3,
+    'gis': 1.3, 'bioinformatics': 1.3, 'finance': 1.3, 'healthcare': 1.3, 'education': 1.3,
+    'social impact': 1.3, 'sustainability': 1.3, 'climate science': 1.3, 'energy': 1.3,
+    'transportation': 1.3, 'retail': 1.3, 'e-commerce': 1.3, 'marketing': 1.3, 'sales': 1.3,
+    'customer service': 1.3, 'hr': 1.3, 'operations': 1.3, 'supply chain': 1.3, 'logistics': 1.3,
+    'manufacturing': 1.3, 'agriculture': 1.3, 'food tech': 1.3, 'fashion': 1.3,
+    'entertainment': 1.3, 'media': 1.3, 'journalism': 1.3, 'publishing': 1.3, 'gaming': 1.3,
+    'sports': 1.3, 'fitness': 1.3, 'wellness': 1.3, 'mental health': 1.3, 'edtech': 1.3,
+    'fintech': 1.3, 'insurtech': 1.3, 'proptech': 1.3, 'legal tech': 1.3, 'govtech': 1.3,
+    'civic tech': 1.3, 'nonprofit': 1.3, 'philanthropy': 1.3, 'social media': 1.3,
+    'influencer marketing': 1.3, 'content marketing': 1.3, 'seo': 1.3, 'sem': 1.3,
+    'ppc': 1.3, 'affiliate marketing': 1.3, 'email marketing': 1.3, 'crm': 1.3,
+    'erp': 1.3, 'scm': 1.3, 'plm': 1.3, 'hcm': 1.3, 'lms': 1.3, 'cms': 1.3,
+    'dam': 1.3, 'eam': 1.3, 'itsm': 1.3, 'itom': 1.3, 'itam': 1.3
+};
   // Get all unique words from both vectors
   const allWords = new Set([...Object.keys(userVector), ...Object.keys(knowledgeVector)]);
   
