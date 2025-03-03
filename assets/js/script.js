@@ -571,7 +571,7 @@ const knowledgeBase = [
 // Improved Text Processing Functions
 function preprocessText(text) {
   return text.toLowerCase()
-    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")  // Remove punctuation
+    .replace(/[.,\/#!$%\^&\*;:?{}=\-_`~()]/g, "")  // Remove punctuation
     .trim();
 }
 
