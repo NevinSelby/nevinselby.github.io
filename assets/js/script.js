@@ -223,7 +223,15 @@ const knowledgeBase = [
   { question: "masters degree", answer: "Nevin is pursuing a Master of Science in Data Science from the University of Wisconsin-Madison, expected to graduate in May 2025." },
   { question: "bachelors degree", answer: "Nevin holds a Bachelor of Technology in Computer Science from the Indian Institute of Information Technology, Kottayam, completed in May 2023." },
   { question: "when did nevin start masters", answer: "Nevin started his Master's program at UW-Madison in Fall 2023 (September 2023)." },
+  { question: "when does nevin graduate", answer: "Nevin will graduate on May 2025. He is currently looking for full time roles starting in May/June 2025." },
+  { question: "graduation", answer: "Nevin will graduate on May 2025. He is currently looking for full time roles starting in May/June 2025." },
+  { question: "when does nevins masters degree end", answer: "Nevin's Master's degree will end on May 2025. i.e He will graduate in May 2025." },
+  { question: "when will nevin finish his studies", answer: "Nevin will complete his studies in May 2025 and will graduate the same month." },  
+  { question: "what is nevin's graduation date", answer: "Nevin's graduation date is set for May 2025. He is seeking full-time roles starting in May/June 2025." },  
+  { question: "when does nevin complete his master's program", answer: "Nevin will complete his Master's program in May 2025 and graduate that month." },  
+  { question: "when is nevin done with school", answer: "Nevin will be done with school in May 2025, which is when he graduates." },  
   { question: "when did nevin graduate bachelors", answer: "Nevin graduated with his Bachelor's degree from IIIT Kottayam in May 2023." },
+  { question: "when did nevins bachelors end", answer: "Nevin graduated with his Bachelor's degree from IIIT Kottayam in May 2023." },
   { question: "when did nevin come to us", answer: "Nevin came to the United States in Fall 2023 (September 2023) to pursue his Master's degree at the University of Wisconsin-Madison." },
   { question: "when did nevin come to the US", answer: "Nevin arrived in the US in Fall 2023 for his Master's in Data Science at UW-Madison." },
   { question: "bachelors final year project", answer: "For his Bachelor's final year project, Nevin developed an advanced machine learning system that focused on computer vision applications. The project demonstrated his early expertise in AI technologies and laid the foundation for his graduate studies in Data Science." },
@@ -391,21 +399,13 @@ const knowledgeBase = [
   // Fallback Response
   { question: "fallback", answer: "I don't have specific information about that aspect of Nevin's background. Would you like to know about his education, work experience, technical skills, projects, or visa status instead?" },
 
-  //Additional Questions
+  //Age related Questions
   { question: "what is nevin's age", answer: "Nevin is 23 years old." },
   { question: "how old is nevin", answer: "Nevin is 23 years old." },
   { question: "what is his age", answer: "Nevin is 23 years old." },
   { question: "how old is he", answer: "Nevin is 23 years old." },
   { question: "nevin's age", answer: "Nevin is 23 years old." },
   { question: "age", answer: "Nevin is 23 years old." },
-  { question: "when does nevin graduate", answer: "Nevin will graduate on May 2025. He is currently looking for full time roles starting in May/June 2025." },
-  { question: "graduation", answer: "Nevin will graduate on May 2025. He is currently looking for full time roles starting in May/June 2025." },
-  { question: "when does nevins masters degree end", answer: "Nevin's Master's degree will end on May 2025. i.e He will graduate in May 2025." },
-  { question: "when will nevin finish his studies", answer: "Nevin will complete his studies in May 2025 and will graduate the same month." },  
-  { question: "what is nevin's graduation date", answer: "Nevin's graduation date is set for May 2025. He is seeking full-time roles starting in May/June 2025." },  
-  { question: "when does nevin complete his master's program", answer: "Nevin will complete his Master's program in May 2025 and graduate that month." },  
-  { question: "when is nevin done with school", answer: "Nevin will be done with school in May 2025, which is when he graduates." },  
-
 
   // Additional technical questions
   { question: "what is nevin's tech stack", answer: "Nevin's tech stack includes Python, PyTorch, TensorFlow, AWS, Docker, Kubernetes, SQL, Tableau, and more. He specializes in machine learning, computer vision, and NLP." },
