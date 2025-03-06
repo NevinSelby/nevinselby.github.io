@@ -253,6 +253,7 @@ const knowledgeBase = [
   { question: "visa status", answer: "Nevin is currently on an F-1 student visa in the United States while completing his Master's degree at UW-Madison." },
   { question: "nevin's visa", answer: "Nevin is currently on an F-1 student visa in the United States while completing his Master's degree at UW-Madison." },
   { question: "visa type", answer: "Nevin is currently on an F-1 student visa in the United States while completing his Master's degree at UW-Madison." },
+  { question: "whats his visa type", answer: "Nevin is currently on an F-1 student visa in the United States while completing his Master's degree at UW-Madison." },
   { question: "what visa does nevin have", answer: "Nevin is currently on an F-1 student visa in the United States while completing his Master's degree at UW-Madison." },
   { question: "work authorization", answer: "Nevin is authorized to work in the US with his F-1 visa status through OPT and potentially 2 years of STEM OPT extension (total 3 years). He may require work visa sponsorship for long-term employment in the US. He is also authorized to work in India without restrictions." },
   { question: "can nevin work in us", answer: "Yes, Nevin can work in the US through F-1 OPT (Optional Practical Training) for 1 year, with eligibility for an additional 2 years of STEM OPT extension due to his Data Science degree. For long-term employment, he may require H-1B or other work visa sponsorship." },
