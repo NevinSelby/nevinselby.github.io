@@ -475,7 +475,7 @@ main {
   margin-bottom: 2px;
 }
 
-.contact-info :is(.contact-link, time, address) {
+.contact-info :is(.contact-link, time, address, custom-logo) {
   color: var(--white-2);
   font-size: var(--fs-7);
 }
@@ -1619,7 +1619,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   .contacts-list {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 30px 15px;
   }
 
