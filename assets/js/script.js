@@ -144,19 +144,69 @@ const pages = document.querySelectorAll("[data-page]");
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
 
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
+    for (let j = 0; j < pages.length; j++) {
+      if (this.innerHTML.toLowerCase() === pages[j].dataset.page) {
+        pages[j].classList.add("active");
         navigationLinks[i].classList.add("active");
         window.scrollTo(0, 0);
       } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
+        pages[j].classList.remove("active");
+        navigationLinks[j].classList.remove("active");
       }
     }
 
   });
 }
+
+// Conversation state and memory
+let conversationContext = {
+  previousTopics: [],
+  userInterests: [],
+  conversationStage: 'greeting',
+  lastQuestionCategory: null,
+  userName: null,
+  mood: 'neutral'
+};
+
+// Response variations for more natural conversation
+const responseVariations = {
+  greeting: [
+    "Hello! I'm NevBot, Nevin's portfolio assistant. How can I help you today?",
+    "Hi there! I can tell you all about Nevin's skills, projects, and experience. What would you like to know?",
+    "Hey! Welcome to Nevin's portfolio. I'm here to answer any questions about his background and work. What interests you?",
+    "Hello! Nice to meet you! I'm here to share information about Nevin's journey in AI and data science. What would you like to explore?"
+  ],
+  followUp: [
+    "Is there anything else you'd like to know about that?",
+    "Would you like me to go deeper into any specific aspect?",
+    "Any other questions about this topic?",
+    "Shall I tell you more about related projects or skills?",
+    "What else would you like to explore?"
+  ],
+  encouragement: [
+    "Great question!",
+    "That's an interesting topic!",
+    "I'm glad you asked about that!",
+    "Excellent question!",
+    "That's a really good point!"
+  ],
+  clarification: [
+    "Could you be more specific about what you'd like to know?",
+    "I'd be happy to help! Could you clarify what aspect interests you most?",
+    "Let me help you with that. Could you tell me more about what you're looking for?",
+    "I want to give you the best answer. Could you elaborate on your question?"
+  ]
+};
+
+// Suggested questions that appear when conversation starts
+const suggestedQuestions = [
+  "What are Nevin's strongest technical skills?",
+  "Tell me about his recent projects",
+  "What's his educational background?",
+  "Where has he worked?",
+  "What makes him unique as a candidate?",
+  "Can he work in the US?"
+];
 
 // Enhanced Knowledge Base based on Nevin's resume and additional information
 const knowledgeBase = [
@@ -503,7 +553,14 @@ const knowledgeBase = [
   { question: "what programming languages does nevin know", answer: "Python, SQL, R, C++, and JavaScript." },
   { question: "what databases has nevin worked with", answer: "He has experience with Snowflake, PostgreSQL, MongoDB, and Milvus (Vector DB)." },
   { question: "what are nevins strongest skills", answer: "Nevin excels in AI & ML, Data Engineering & Analytics, MLOps & Cloud, and Programming." },
-  { question: "why should we hire nevin?", answer: "Nevin brings strong expertise as an AI Software Development Engineer , hands-on experience with real-world AI projects, and a passion for innovation." }
+  { question: "why should we hire nevin?", answer: "Nevin brings strong expertise as an AI Software Development Engineer , hands-on experience with real-world AI projects, and a passion for innovation." },
+  
+  // Additional conversational responses
+  { question: "what makes nevin special", answer: "Nevin combines strong technical skills with real-world impact. He's cut analysis time from 48 hours to 10 minutes, improved model accuracy by 25%, and built scalable systems handling 10,000+ queries. Plus, he's a great communicator with a YouTube channel!" },
+  { question: "nevin's impact", answer: "Nevin creates measurable impact: 90x faster preprocessing, 35% reduction in training cycles, 99.9% dashboard uptime, and systems scaling to 10,000 hourly queries. He focuses on solving real problems efficiently." },
+  { question: "what's impressive about nevin", answer: "Nevin's ability to bridge research and practical applications is impressive. He's worked with cutting-edge models like CLIP and Stable Diffusion while delivering production systems that handle thousands of users." },
+  { question: "nevin's achievements", answer: "Key achievements include: automating research to save 48 hours per task, improving phenology accuracy by 25%, building systems with 99.9% uptime, and creating ML pipelines that reduced setup time from 2 hours to 3 minutes." },
+  { question: "what's unique about nevin", answer: "Nevin uniquely combines deep technical expertise in AI/ML with strong communication skills (YouTube channel, technical writing), international experience, and a track record of delivering real business impact through innovative solutions." }
 ];
 
 // Improved Text Processing Functions
@@ -669,129 +726,371 @@ function enhancedCosineSimilarity(userVector, knowledgeVector) {
   return dotProduct / (magnitudeA * magnitudeB);
 }
 
-// Improved Function to Find the Best Match
-function findBestMatch(userInput) {
-  const userVector = textToVector(userInput);
+// Enhanced intent recognition
+function detectIntent(userInput) {
+  const input = preprocessText(userInput);
   
-  // Track top 3 matches for better response selection
+  // Greeting intents
+  if (/(hi|hello|hey|good morning|good afternoon|good evening|greetings)/i.test(userInput)) {
+    return 'greeting';
+  }
+  
+  // Question intents
+  if (/(what|how|where|when|who|why|which|can|does|is|tell me|explain)/i.test(userInput)) {
+    return 'question';
+  }
+  
+  // Emotional expressions
+  if (/(thanks|thank you|awesome|great|amazing|cool|interesting|impressive)/i.test(userInput)) {
+    return 'positive';
+  }
+  
+  if (/(sad|unhappy|disappointed|frustrated|confused|difficult)/i.test(userInput)) {
+    return 'negative';
+  }
+  
+  // Goodbye intents
+  if (/(bye|goodbye|see you|farewell|thanks|that's all)/i.test(userInput)) {
+    return 'goodbye';
+  }
+  
+  return 'general';
+}
+
+// Extract conversation topics
+function extractTopics(userInput) {
+  const topics = [];
+  const input = preprocessText(userInput);
+  
+  const topicKeywords = {
+    'education': ['education', 'degree', 'masters', 'bachelors', 'university', 'college', 'study', 'academic'],
+    'work': ['work', 'job', 'experience', 'employment', 'career', 'position', 'role'],
+    'skills': ['skills', 'programming', 'python', 'ai', 'ml', 'machine learning', 'data science'],
+    'projects': ['project', 'github', 'automl', 'weather', 'portfolio'],
+    'personal': ['hobbies', 'youtube', 'medium', 'interests', 'travel', 'photography'],
+    'visa': ['visa', 'work authorization', 'opt', 'sponsorship', 'legal']
+  };
+  
+  Object.entries(topicKeywords).forEach(([topic, keywords]) => {
+    if (keywords.some(keyword => input.includes(keyword))) {
+      topics.push(topic);
+    }
+  });
+  
+  return topics;
+}
+
+// Generate contextual response
+function generateContextualResponse(baseAnswer, intent, topics) {
+  let response = baseAnswer;
+  
+  // Add conversational elements based on intent
+  if (intent === 'question' && Math.random() > 0.5) {
+    const encouragement = responseVariations.encouragement[Math.floor(Math.random() * responseVariations.encouragement.length)];
+    response = encouragement + ' ' + response;
+  }
+  
+  // Add follow-up questions
+  if (topics.length > 0 && Math.random() > 0.6) {
+    const followUp = responseVariations.followUp[Math.floor(Math.random() * responseVariations.followUp.length)];
+    response += ' ' + followUp;
+  }
+  
+  // Add related suggestions
+  if (topics.includes('skills') && !conversationContext.previousTopics.includes('projects')) {
+    response += " You might also want to know about his recent projects!";
+  } else if (topics.includes('projects') && !conversationContext.previousTopics.includes('skills')) {
+    response += " Feel free to ask about his technical skills too!";
+  }
+  
+  return response;
+}
+
+// Enhanced function to find the best match with context
+function findBestMatch(userInput) {
+  const intent = detectIntent(userInput);
+  const topics = extractTopics(userInput);
+  
+  // Update conversation context
+  conversationContext.previousTopics = [...new Set([...conversationContext.previousTopics, ...topics])];
+  conversationContext.lastQuestionCategory = topics[0] || null;
+  
+  // Handle special intents
+  if (intent === 'greeting') {
+    const greetings = responseVariations.greeting;
+    return greetings[Math.floor(Math.random() * greetings.length)];
+  }
+  
+  if (intent === 'positive') {
+    return "Thank you! I'm glad you find Nevin's profile interesting. What else would you like to know?";
+  }
+  
+  if (intent === 'negative') {
+    return "I understand. Is there something specific I can help clarify about Nevin's background?";
+  }
+  
+  if (intent === 'goodbye') {
+    return "Thank you for your interest in Nevin's profile! Feel free to return anytime if you have more questions. Have a great day!";
+  }
+  
+  // Original matching logic with enhancements
+  const userVector = textToVector(userInput);
   let matches = [];
   
   knowledgeBase.forEach(item => {
     const questionVector = textToVector(item.question);
     const similarity = enhancedCosineSimilarity(userVector, questionVector);
-    
     matches.push({ ...item, similarity });
   });
   
-  // Sort by similarity score in descending order
   matches.sort((a, b) => b.similarity - a.similarity);
   
-  // If top match has good similarity, return it
-  if (matches[0].similarity > 0.6) {
-    return matches[0].answer;
+  let baseAnswer;
+  
+  if (matches[0].similarity > 0.5) {
+    baseAnswer = matches[0].answer;
+  } else {
+    // Fallback with helpful suggestions
+    const suggestions = suggestedQuestions.slice(0, 3).join(', ');
+    baseAnswer = `I don't have specific information about that. You might want to ask: ${suggestions}`;
   }
-  // If we have multiple decent matches, consider combining information
-  else if (matches[0].similarity > 0.4 && matches[1].similarity > 0.3) {
-    // Check if the top matches are related (having similar answers)
-    const answer1Words = new Set(preprocessText(matches[0].answer).split(/\s+/));
-    const answer2Words = new Set(preprocessText(matches[1].answer).split(/\s+/));
-    
-    // Simple way to check answer similarity - count common words
-    let commonWords = 0;
-    answer1Words.forEach(word => {
-      if (answer2Words.has(word)) commonWords++;
-    });
-    
-    // If answers seem related, return the better match
-    return matches[0].answer;
-  }
-  // If no good match, search for keywords in the input
-  else {
-    const keywords = preprocessText(userInput).split(/\s+/);
-    const keywordMatches = [];
-    
-    // Check each knowledge base entry for keyword matches
-    knowledgeBase.forEach(item => {
-      const questionWords = new Set(preprocessText(item.question).split(/\s+/));
-      let matchCount = 0;
-      
-      keywords.forEach(keyword => {
-        if (questionWords.has(keyword)) matchCount++;
-      });
-      
-      if (matchCount > 0) {
-        keywordMatches.push({ ...item, matchCount });
-      }
-    });
-    
-    if (keywordMatches.length > 0) {
-      // Sort by match count
-      keywordMatches.sort((a, b) => b.matchCount - a.matchCount);
-      return keywordMatches[0].answer;
-    }
-    
-    return "I don't have specific information about that. Could you try rephrasing your question about Nevin's background, skills, or projects?";
-  }
+  
+  // Generate contextual response
+  return generateContextualResponse(baseAnswer, intent, topics);
 }
 
-// Chatbot Elements
+// Simple Chatbot Implementation
 const chatbotContainer = document.querySelector('.chatbot-container');
 const chatbotMessages = document.getElementById('chatbot-messages');
 const chatbotInput = document.getElementById('chatbot-input');
 const chatbotSendBtn = document.getElementById('chatbot-send-btn');
-const chatbotToggleBtn = document.getElementById('chatbot-toggle-btn');
 
-// Event Listeners
-chatbotSendBtn.addEventListener('click', handleUserInput);
-chatbotInput.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') handleUserInput();
-});
-
-// Function to Add a Message to the Chatbot
+// Simple message function with better scrolling
 function addMessage(message, isUser = false) {
+  if (!chatbotMessages) return;
+  
   const messageElement = document.createElement('div');
   messageElement.classList.add('chatbot-message');
   messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
   messageElement.textContent = message;
   chatbotMessages.appendChild(messageElement);
-  chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Auto-scroll
+  
+  // Ensure the latest message is visible with a small delay
+  setTimeout(() => {
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  }, 10);
 }
 
-// Function to Handle User Input
+// Enhanced input handler with better conversation logic
 function handleUserInput() {
+  if (!chatbotInput || !chatbotMessages) return;
+  
   const userInput = chatbotInput.value.trim();
   if (userInput === "") return;
 
-  addMessage(userInput, true); // Add user message
-  chatbotInput.value = ""; // Clear input
+  // Update conversation context
+  conversationContext.previousTopics.push(userInput.toLowerCase());
+  
+  addMessage(userInput, true);
+  chatbotInput.value = "";
 
   // Add typing indicator
   const typingIndicator = document.createElement('div');
   typingIndicator.classList.add('chatbot-message', 'bot-message', 'typing-indicator');
   typingIndicator.textContent = "...";
   chatbotMessages.appendChild(typingIndicator);
-
-  // Simulate a short delay for processing (more natural)
+  
+  // Scroll to show typing indicator
   setTimeout(() => {
-    // Remove typing indicator
-    chatbotMessages.removeChild(typingIndicator);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  }, 10);
+
+  // Dynamic delay based on input complexity for more natural feel
+  const delay = Math.min(Math.max(userInput.length * 25, 500), 2000);
+
+  setTimeout(() => {
+    // Remove typing indicator safely
+    if (typingIndicator && typingIndicator.parentNode) {
+      chatbotMessages.removeChild(typingIndicator);
+    }
     
-    // Get and display response
-    const response = findBestMatch(userInput);
+    // Get enhanced response
+    const response = getEnhancedResponse(userInput);
     addMessage(response);
-  }, 600);
+    
+    // Update conversation stage
+    if (conversationContext.conversationStage === 'greeting') {
+      conversationContext.conversationStage = 'active';
+    }
+  }, delay);
 }
 
-// Event Listeners
+// Enhanced response system with better intelligence
+function getEnhancedResponse(userInput) {
+  const input = userInput.toLowerCase().trim();
+  
+  // Handle greetings with context
+  if (isGreeting(input)) {
+    if (conversationContext.conversationStage === 'active') {
+      return getRandomResponse(["Hi again! What else would you like to know about Nevin?", 
+                               "Hello! I'm still here to help with any questions about Nevin.", 
+                               "Hey there! Ready for more questions about Nevin's background?"]);
+    }
+    return getRandomResponse(responseVariations.greeting);
+  }
+  
+  // Handle goodbyes
+  if (isGoodbye(input)) {
+    return getRandomResponse(["Goodbye! Thanks for your interest in Nevin's profile.", 
+                             "See you later! Feel free to come back anytime.", 
+                             "Take care! Hope I was helpful in learning about Nevin."]);
+  }
+  
+  // Handle thank you responses
+  if (isThanks(input)) {
+    return getRandomResponse(["You're very welcome! Any other questions?", 
+                             "Happy to help! What else would you like to know?", 
+                             "My pleasure! Is there anything else about Nevin you'd like to explore?"]);
+  }
+  
+  // Detect follow-up questions
+  if (isFollowUp(input)) {
+    return handleFollowUp(input);
+  }
+  
+  // Use enhanced matching for complex queries
+  const response = findBestMatchEnhanced(input);
+  
+  // Add conversational elements
+  return addConversationalTouch(response, input);
+}
+
+// Helper functions for better conversation detection
+function isGreeting(input) {
+  return /^(hi|hello|hey|good morning|good afternoon|good evening|greetings)/.test(input);
+}
+
+function isGoodbye(input) {
+  return /(bye|goodbye|see you|farewell|gotta go|talk later|thanks.*bye)/.test(input);
+}
+
+function isThanks(input) {
+  return /(thank|thanks|appreciate|helpful|great)/.test(input) && !/(no thank|not helpful)/.test(input);
+}
+
+function isFollowUp(input) {
+  return /(more|else|other|also|what about|tell me more|anything else|continue|expand)/.test(input);
+}
+
+// Enhanced pattern matching with multiple techniques
+function findBestMatchEnhanced(input) {
+  // First try exact/fuzzy matching
+  let bestMatch = findBestMatch(input);
+  
+  // If no good match, try semantic understanding
+  if (bestMatch.includes("I don't have specific information")) {
+    bestMatch = trySemanticMatching(input);
+  }
+  
+  return bestMatch;
+}
+
+// Semantic matching for better understanding
+function trySemanticMatching(input) {
+  const concepts = extractConcepts(input);
+  
+  // Match concepts to knowledge areas
+  if (concepts.includes('skills') || concepts.includes('technology') || concepts.includes('programming')) {
+    return "Nevin's technical skills include Python, PyTorch, TensorFlow, AWS, Docker, MLflow, MongoDB, Milvus, and more. He specializes in AI/ML, data engineering, and MLOps. Would you like details on any specific area?";
+  }
+  
+  if (concepts.includes('experience') || concepts.includes('work') || concepts.includes('job')) {
+    return "Nevin has experience as an AI Software Development Engineer, Data Science Intern, AI Research Assistant, and Graduate Researcher. He's worked with LLM pipelines, computer vision, NLP, and MLOps. What specific role interests you?";
+  }
+  
+  if (concepts.includes('project') || concepts.includes('built') || concepts.includes('created')) {
+    return "Nevin has worked on projects like AutoML-ify (automated ML pipeline) and MLOps Weather Prediction (real-time forecasting). He's also done research with CLIP-Stable Diffusion and fine-tuned models like BERT and ResNet50. Want to hear about a specific project?";
+  }
+  
+  if (concepts.includes('education') || concepts.includes('study') || concepts.includes('degree')) {
+    return "Nevin has a Master's in Data Science from University of Wisconsin-Madison (3.70 GPA) and a Bachelor's in Computer Science from Indian Institute of Information Technology (9.15 GPA). His coursework covered advanced ML, big data systems, and optimization. Need more details?";
+  }
+  
+  // Default response with helpful suggestions
+  return "I'd be happy to help! You can ask me about Nevin's technical skills, work experience, education, projects, or personal interests. What specific aspect would you like to know about?";
+}
+
+// Extract key concepts from user input
+function extractConcepts(input) {
+  const conceptMap = {
+    'skills': ['skill', 'technology', 'programming', 'language', 'framework', 'tool', 'software'],
+    'experience': ['experience', 'work', 'job', 'career', 'professional', 'employment', 'role'],
+    'project': ['project', 'built', 'created', 'developed', 'made', 'portfolio', 'github'],
+    'education': ['education', 'study', 'degree', 'university', 'college', 'school', 'academic']
+  };
+  
+  const concepts = [];
+  for (const [concept, keywords] of Object.entries(conceptMap)) {
+    if (keywords.some(keyword => input.includes(keyword))) {
+      concepts.push(concept);
+    }
+  }
+  return concepts;
+}
+
+// Handle follow-up questions based on context
+function handleFollowUp(input) {
+  const lastTopic = conversationContext.previousTopics[conversationContext.previousTopics.length - 2] || '';
+  
+  if (lastTopic.includes('skill') || lastTopic.includes('programming')) {
+    return "Besides his core Python and AI/ML skills, Nevin is also proficient in cloud technologies (AWS), databases (MongoDB, PostgreSQL), and DevOps tools (Docker, MLflow). He's particularly strong in end-to-end pipeline development. Any specific technology you'd like to know more about?";
+  }
+  
+  if (lastTopic.includes('project') || lastTopic.includes('work')) {
+    return "Nevin's projects showcase real-world impact - like cutting research analysis time from 48 hours to 10 minutes, or improving model accuracy by 25 percentage points. He focuses on practical applications that solve actual problems. Want to dive deeper into any specific achievement?";
+  }
+  
+  return "What specific aspect would you like me to elaborate on? I can provide more details about his technical skills, project outcomes, work experience, or educational background.";
+}
+
+// Add conversational elements to responses
+function addConversationalTouch(response, input) {
+  // Add encouraging starts occasionally
+  if (Math.random() > 0.7) {
+    const encourager = getRandomResponse(responseVariations.encouragement);
+    response = encourager + " " + response;
+  }
+  
+  // Add follow-up questions occasionally
+  if (Math.random() > 0.6 && !response.includes('?')) {
+    const followUp = getRandomResponse(responseVariations.followUp);
+    response += " " + followUp;
+  }
+  
+  return response;
+}
+
+// Utility function to get random response
+function getRandomResponse(responses) {
+  return responses[Math.floor(Math.random() * responses.length)];
+}
+
+// Add event listeners
+if (chatbotSendBtn) {
 chatbotSendBtn.addEventListener('click', handleUserInput);
+}
+
+if (chatbotInput) {
 chatbotInput.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') handleUserInput();
 });
+}
 
-// Show welcome message after page load
+// Initialize chatbot with simple welcome message
 window.addEventListener('load', () => {
-  chatbotContainer.style.display = 'block';
+  if (chatbotMessages) {
   setTimeout(() => {
     addMessage("Hi! I'm Nevin's portfolio assistant. Ask me anything about his skills, experience, projects, or interests!");
   }, 500);
+  }
 });
