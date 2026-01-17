@@ -50,19 +50,6 @@ export interface Experience {
     description: string[];
 }
 
-export interface Education {
-    degree: string;
-    school: string;
-    period: string;
-    gpa?: string;
-}
-
-export interface Certification {
-    name: string;
-    issuer?: string;
-    date?: string;
-}
-
 export interface Project {
     slug: string;
     title: string;
@@ -93,8 +80,6 @@ export interface ContentData {
     publications: Publication[];
     articles?: Article[];
     videos?: Video[];
-    education?: Education[];
-    certifications?: Certification[];
     githubRepos?: GithubRepo[];
 }
 

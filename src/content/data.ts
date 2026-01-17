@@ -12,26 +12,25 @@ const staticData = {
         title: "AI & Cloud Engineer",
         oneLiner: "Specializing in ML infrastructure, runtime optimization, and large-scale model deployment across AWS and GCP.",
         bio: [
-            "AI & Cloud Engineer with expertise in building scalable ML systems, runtime optimization, and cloud-native deployments across GCP (Vertex AI) and AWS (SageMaker, Lambda). Proficient in Python, C++, and distributed systems, with hands-on experience in LLM integration, model serving, and MLOps pipelines.",
+            "I specialize in machine learning infrastructure, runtime optimization, and deploying models at scale using AWS and GCP.",
             "My passion lies in building system-level software that accelerates AI and ensures reliability.",
+            "My toolkit includes Python, C++, Vertex AI, SageMaker, and containerized pipelines.",
             "Beyond code, I'm an adventurer and storyteller, running a YouTube travel channel, capturing moments through photography, and writing a newsletter that simplifies finance and AI."
         ],
         personalJourney: [
-            "My path hasn't been a straight line. It started with a curiosity about how things work—taking apart radios, building simple circuits—and evolved into a fascination with the systems that govern our world, both digital and financial.",
-            "I believe that technology shouldn't just be about efficiency; it should be about empowerment. That's why I started my YouTube channel and newsletter. I wanted to bridge the gap between complex technical concepts and everyday understanding.",
-            "Traveling has been my greatest teacher. Navigating foreign cities, attempting to speak new languages, and seeing how different cultures solve problems has profoundly shaped my engineering philosophy. It taught me that there is rarely one 'correct' way to build something—context is everything.",
-            "Today, I treat my career not just as a series of jobs, but as a continuous project of learning. Whether I'm optimizing a Kubernetes cluster or explaining the nuances of an IRA, the goal is the same: to build clarity and reliability in a chaotic world."
+            "My journey began with a curiosity for how large-scale systems handle the complexities of AI. Over the years, I've transitioned from pure research to focuses on MLOps and cloud architecture, always looking for ways to bridge the gap between innovation and production.",
+            "When I'm not in the clouds (AWS/GCP), you'll likely find me on a plane to a new destination or experimenting with financial datasets for my next newsletter issue."
         ],
         location: "United States",
         email: "nevinselby2001@gmail.com",
         phone: "+1 (608) 239-6451",
-        linkedin: "https://linkedin.com/in/nevinselby",
-        website: "https://nevinselby.github.io",
+        website: "nevinselby.github.io",
+        linkedin: "linkedin.com/in/nevinselby",
         social: {
-            youtube: "https://youtube.com/@placeholder",
-            instagram: "https://instagram.com/placeholder",
-            newsletter: "https://newsletter.placeholder.com",
-            calendly: "https://calendly.com/nevinselby2001/30min"
+            youtube: "https://youtube.com/@NevinSelby",
+            instagram: "https://instagram.com/nevin_selby",
+            newsletter: "https://iterativeai.beehiiv.com/",
+            calendly: "https://calendly.com/nevin-selby/30min"
         }
     },
     skills: [
@@ -40,20 +39,12 @@ const staticData = {
             skills: ["Python", "C++", "SQL", "Bash"]
         },
         {
-            category: "Machine Learning",
-            skills: ["TensorFlow", "PyTorch", "Scikit-learn", "BERT", "CLIP", "GPT", "XGBoost"]
+            category: "ML / Data",
+            skills: ["TensorFlow", "PyTorch", "Scikit-learn", "Vertex AI", "SageMaker", "MLflow"]
         },
         {
-            category: "Cloud",
-            skills: ["GCP (Vertex AI, Cloud Functions, Pub/Sub)", "AWS (SageMaker, Lambda, S3, EC2)"]
-        },
-        {
-            category: "DevOps & Infra",
-            skills: ["Docker", "Kubernetes", "MLflow", "Airflow", "Git", "CI/CD"]
-        },
-        {
-            category: "Competencies",
-            skills: ["Systems programming", "Runtime optimization", "MLOps", "Model deployment", "Data engineering"]
+            category: "Cloud / DevOps",
+            skills: ["GCP", "AWS", "Docker", "Kubernetes", "CI/CD", "Airflow"]
         }
     ],
     experience: [
@@ -73,9 +64,8 @@ const staticData = {
             highlights: [
                 "Vertex AI pipelines: deployment speed +40%, latency -35%",
                 "Cloud Functions as runtime tools for Gemini LLM: 99.8% uptime",
-                "Pub/Sub + Cloud Run workflows: throughput +25%",
-                "RAG-powered agents: automation accuracy +30%, manual ops -40%",
-                "Container runtime optimization: compute cost -20%"
+                "Container runtime optimization: compute cost -20%",
+                "RAG-powered agents: automation accuracy +30%, manual ops -40%"
             ]
         },
         {
@@ -94,8 +84,7 @@ const staticData = {
             highlights: [
                 "GPT-3.5 sentiment models: detected 12% negative sentiment increase after unionization events",
                 "Fine-tuned BERT: precision +18%, inference cost -25%",
-                "CLIP multimodal price prediction: accuracy +23%",
-                "Python-SQL ETL automation: preprocessing time -40%"
+                "CLIP multimodal price prediction: accuracy +23%"
             ]
         },
         {
@@ -114,29 +103,8 @@ const staticData = {
             highlights: [
                 "ResNet50 + YOLOv8: detection accuracy +25%, precision +15%",
                 "CLIP semi-supervised auto-labeling: labeling effort -80%",
-                "AWS SageMaker pipelines: compute overhead -30%, storage inefficiencies -20%",
-                "Collaborated with growers for actionable insights"
+                "AWS SageMaker pipelines: compute overhead -30%"
             ]
-        }
-    ],
-    education: [
-        {
-            school: "University of Wisconsin - Madison",
-            degree: "M.S. Data Science",
-            period: "Sept 2023 – May 2025",
-            gpa: "3.70/4.0"
-        },
-        {
-            school: "Indian Institute of Information Technology",
-            degree: "B.Tech. Computer Science",
-            period: "Aug 2019 – May 2023",
-            gpa: "9.15/10.0"
-        }
-    ],
-    certifications: [
-        {
-            name: "Google Cloud 3x Certified",
-            issuer: "Professional Machine Learning Engineer, Professional Data Engineer, Associate Cloud Engineer"
         }
     ],
     projects: [

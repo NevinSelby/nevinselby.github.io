@@ -36,7 +36,7 @@ const createSearchIndex = () => {
             type: 'Experience',
             title: `${e.role} at ${e.company}`,
             content: e.highlights.join(' '),
-            path: '/experience'
+            path: `/experience/${e.slug}`
         });
     });
 
@@ -91,24 +91,11 @@ export const useChat = () => {
 
     const fuse = useMemo(() => new Fuse(searchIndex, {
         keys: ['title', 'content', 'type', 'tags'],
-        threshold: 0.3, // Lower threshold = stricter, but 0.3 is good balance. 
+        threshold: 0.3, // Lower threshold = stricter, but 0.3 is good balance.
         includeScore: true,
         ignoreLocation: true, // Search anywhere in text
         useExtendedSearch: true
     }), [searchIndex]);
-
-    const handleSend = async (text: string) => {
-        const userMsg: Message = { id: Date.now().toString(), sender: 'user', text };
-        setMessages(prev => [...prev, userMsg]);
-
-        // Show typing indicator or just wait
-        try {
-            const response = await generateResponse(text);
-            setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), sender: 'bot', ...response }]);
-        } catch (e) {
-            setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), sender: 'bot', text: "Sorry, I'm having trouble thinking right now." }]);
-        }
-    };
 
     const generateResponse = async (input: string): Promise<{ text: string; action?: { label: string; path: string } }> => {
         const lower = input.toLowerCase();
@@ -192,13 +179,25 @@ export const useChat = () => {
 
 
 
+    const handleSend = async (text: string) => {
+        const userMsg: Message = { id: Date.now().toString(), sender: 'user', text };
+        setMessages(prev => [...prev, userMsg]);
+
+        // Show typing indicator or just wait
+        try {
+            const response = await generateResponse(text);
+            setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), sender: 'bot', ...response }]);
+        } catch (e) {
+            setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), sender: 'bot', text: "Sorry, I'm having trouble thinking right now." }]);
+        }
+    };
+
     const handleAction = (path: string) => {
         if (path.startsWith('http')) {
             window.open(path, '_blank');
         } else {
             navigate(path);
         }
-        // Optional: Close chat on navigation on mobile?
     };
 
     return {
