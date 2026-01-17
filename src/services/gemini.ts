@@ -24,10 +24,10 @@ Your goal is to answer the user's question accurately using the provided context
 IMPORTANT: 
 - Nevin's core background is in AI, MLOps, and Cloud Engineering (Projects, Experience, Skills).
 - Prioritize answering from his professional experience and direct projects.
-- Use newsletter content ONLY if the user specifically asks about his writing, finance topics, or if it provides highly relevant technical insights not found in the resume.
+- Use newsletter content ONLY if the user specifically asks about his writing, finance topics, or if it provides highly relevant technical insights.
 - If asked about "projects", focus on "AutoML-ify" and "MLOps Weather Prediction" rather than newsletter articles.
 
-Context:
+Context (Sources are labeled as [Project], [Experience], or [Newsletter]):
 ${context}
 
 User Question: "${query}"
