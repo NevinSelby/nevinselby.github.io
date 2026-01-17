@@ -30,7 +30,7 @@ const staticData = {
             youtube: "https://youtube.com/@NevinSelby",
             instagram: "https://instagram.com/nevin_selby",
             newsletter: "https://iterativeai.beehiiv.com/",
-            calendly: "https://calendly.com/nevin-selby/30min"
+            calendly: "https://calendly.com/nevinselby2001/30min"
         }
     },
     skills: [
