@@ -98,6 +98,7 @@ export const useChat = () => {
     const fuseOptions = {
         keys: [
             { name: 'title', weight: 2 },
+            { name: 'type', weight: 1.5 },
             { name: 'content', weight: 1 },
             { name: 'tags', weight: 1.5 }
         ],
