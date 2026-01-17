@@ -10,5 +10,5 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: './', // For GitHub Pages (or user repo name if known, but ./ works for relative)
+  base: '/NevinSelby-Portfolio/',
 })
