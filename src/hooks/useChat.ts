@@ -89,6 +89,7 @@ export const useChat = () => {
         }
     ]);
     const [isOpen, setIsOpen] = useState(false);
+    const [isTyping, setIsTyping] = useState(false);
 
     const coreIndex = useMemo(() => createCoreIndex(), []);
     const contentIndex = useMemo(() => createContentIndex(), []);
@@ -173,13 +174,15 @@ export const useChat = () => {
     const handleSend = async (text: string) => {
         const userMsg: Message = { id: Date.now().toString(), sender: 'user', text };
         setMessages(prev => [...prev, userMsg]);
+        setIsTyping(true);
 
-        // Show typing indicator or just wait
         try {
             const response = await generateResponse(text);
             setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), sender: 'bot', ...response }]);
         } catch (e) {
             setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), sender: 'bot', text: "Sorry, I'm having trouble thinking right now." }]);
+        } finally {
+            setIsTyping(false);
         }
     };
 
@@ -195,6 +198,7 @@ export const useChat = () => {
         messages,
         isOpen,
         setIsOpen,
+        isTyping,
         handleSend,
         handleAction
     };

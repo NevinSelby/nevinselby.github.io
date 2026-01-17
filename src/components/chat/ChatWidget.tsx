@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const ChatWidget = () => {
-    const { messages, isOpen, setIsOpen, handleSend, handleAction } = useChat();
+    const { messages, isOpen, setIsOpen, isTyping, handleSend, handleAction } = useChat();
     const [input, setInput] = useState('');
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -15,11 +15,11 @@ export const ChatWidget = () => {
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages, isOpen]);
+    }, [messages, isOpen, isTyping]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!input.trim()) return;
+        if (!input.trim() || isTyping) return;
         handleSend(input);
         setInput('');
     };
@@ -79,6 +79,32 @@ export const ChatWidget = () => {
                                     </div>
                                 </div>
                             ))}
+
+                            {/* Thinking Indicator */}
+                            {isTyping && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="flex justify-start"
+                                >
+                                    <div className="bg-gray-100 border border-gray-200 rounded-2xl rounded-bl-none p-3.5 shadow-sm">
+                                        <div className="flex gap-1.5">
+                                            {[0, 1, 2].map((i) => (
+                                                <motion.div
+                                                    key={i}
+                                                    animate={{ opacity: [0.3, 1, 0.3] }}
+                                                    transition={{
+                                                        duration: 1,
+                                                        repeat: Infinity,
+                                                        delay: i * 0.2
+                                                    }}
+                                                    className="w-1.5 h-1.5 bg-gray-400 rounded-full"
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
                             <div ref={messagesEndRef} />
                         </div>
 
