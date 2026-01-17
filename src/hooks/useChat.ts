@@ -16,7 +16,7 @@ interface Message {
 }
 
 // Flatten data for search indexing
-const createSearchIndex = () => {
+const createCoreIndex = () => {
     const index: any[] = [];
 
     // Projects
@@ -40,16 +40,6 @@ const createSearchIndex = () => {
         });
     });
 
-    // Publications
-    data.publications.forEach(p => {
-        index.push({
-            type: 'Publication',
-            title: p.title,
-            content: p.summary,
-            path: '/publications'
-        });
-    });
-
     // Skills
     data.skills.forEach(s => {
         index.push({
@@ -60,6 +50,21 @@ const createSearchIndex = () => {
         });
     });
 
+    // Publications
+    data.publications.forEach(p => {
+        index.push({
+            type: 'Publication',
+            title: p.title,
+            content: p.summary,
+            path: '/publications'
+        });
+    });
+
+    return index;
+};
+
+const createContentIndex = () => {
+    const index: any[] = [];
     // Newsletter (Scraped Data)
     if (data.articles) {
         data.articles.forEach(article => {
@@ -71,7 +76,6 @@ const createSearchIndex = () => {
             });
         });
     }
-
     return index;
 };
 
@@ -86,60 +90,69 @@ export const useChat = () => {
     ]);
     const [isOpen, setIsOpen] = useState(false);
 
-    const searchIndex = useMemo(() => createSearchIndex(), []);
+    const coreIndex = useMemo(() => createCoreIndex(), []);
+    const contentIndex = useMemo(() => createContentIndex(), []);
     const vectorEngine = useMemo(() => new VectorEngine(knowledgeBase), []);
 
-    const fuse = useMemo(() => new Fuse(searchIndex, {
+    const fuseOptions = {
         keys: ['title', 'content', 'type', 'tags'],
-        threshold: 0.3, // Lower threshold = stricter, but 0.3 is good balance.
+        threshold: 0.35,
         includeScore: true,
-        ignoreLocation: true, // Search anywhere in text
+        ignoreLocation: true,
         useExtendedSearch: true
-    }), [searchIndex]);
+    };
+
+    const coreFuse = useMemo(() => new Fuse(coreIndex, fuseOptions), [coreIndex]);
+    const contentFuse = useMemo(() => new Fuse(contentIndex, fuseOptions), [contentIndex]);
 
     const generateResponse = async (input: string): Promise<{ text: string; action?: { label: string; path: string } }> => {
         const lower = input.toLowerCase();
 
-        // Greeting
-        if (['hi', 'hello', 'hey', 'greetings', 'yo'].some(greeting => lower.startsWith(greeting))) {
+        // 1. Core Intents (bypass search for direct answers)
+        if (['hi', 'hello', 'hey', 'yo', 'greetings'].some(g => lower.startsWith(g))) {
             return {
-                text: "Hello! I'm Nevin's digital assistant. I can tell you about my projects, my experience in AI & Finance, or my latest newsletter articles. How can I help?",
+                text: "Hello! I'm Nevin's digital assistant. I can tell you about my projects, my experience in AI & Finance, or my latest articles. How can I help?",
             };
         }
 
-        // Direct Intent Handling
         if (lower.includes('contact') || lower.includes('email') || lower.includes('reach out')) {
             return {
-                text: "You can reach Nevin via email or LinkedIn. Check out the Contact page.",
+                text: "You can reach Nevin via email or LinkedIn. Both are linked on the Contact page.",
                 action: { label: "Go to Contact", path: "/contact" }
             };
         }
 
-        if (lower.includes('youtube') || lower.includes('video') || lower.includes('instagram') || lower.includes('travel')) {
-            return {
-                text: "Nevin loves adventures! He has a YouTube channel and shares photos from his travels.",
-                action: { label: "View Media", path: "/media" }
-            };
-        }
+        // 2. Intent Detection for Biasing
+        const isProfessionalQuery = /work|project|experience|role|tech|skill|resume|job|position|build|engineer/i.test(lower);
+        const isContentQuery = /article|newsletter|blog|write|finance|topic|read/i.test(lower);
 
-        if (lower.includes('newsletter') || lower.includes('blog')) {
-            return {
-                text: "He writes about the convergence of AI and Finance.",
-                action: { label: "Read Newsletter", path: "/newsletter" }
-            };
-        }
-
-        // Hybrid Search for Context
-        // 1. Vector Search
+        // 3. Search Aggregation
         const vectorMatch = vectorEngine.search(input);
 
-        // 2. Keyword Search (Fuse)
-        const fuseResults = fuse.search(input).slice(0, 3); // Top 3
+        let fuseResults: any[] = [];
 
-        // Construct Context
+        if (isProfessionalQuery && !isContentQuery) {
+            // Strictly Core
+            fuseResults = coreFuse.search(input).slice(0, 3);
+        } else if (isContentQuery && !isProfessionalQuery) {
+            // Strictly Content
+            fuseResults = contentFuse.search(input).slice(0, 3);
+        } else {
+            // Hybrid with Bias: Search both, but boost score for Core matches
+            const coreRes = coreFuse.search(input).slice(0, 2);
+            const contentRes = contentFuse.search(input).slice(0, 2);
+            fuseResults = [...coreRes, ...contentRes].sort((a, b) => {
+                // Penalize newsletter results slightly unless it's a very strong match
+                const aBias = a.item.type === 'Newsletter' ? 0.2 : 0;
+                const bBias = b.item.type === 'Newsletter' ? 0.2 : 0;
+                return (a.score! + aBias) - (b.score! + bBias);
+            });
+        }
+
+        // 4. Construct Context
         let context = "";
         if (vectorMatch) {
-            context += `Code Knowledge: ${vectorMatch.answer}\n`;
+            context += `Direct Q&A Knowledge: ${vectorMatch.answer}\n`;
         }
 
         fuseResults.forEach(res => {
@@ -147,32 +160,41 @@ export const useChat = () => {
             context += `Source [${item.type} - ${item.title}]: ${item.content.substring(0, 500)}...\n`;
         });
 
-        // 3. LLM Generation
-        if (context.length > 10) {
-            // Import dynamically to avoid top-level await issues if any
+        // 5. LLM Response Generation
+        if (context.length > 5) {
             const { generateGeminiResponse } = await import('@/services/gemini');
             const llmAnswer = await generateGeminiResponse(input, context);
 
             if (llmAnswer) {
-                // Determine best action link from top Fuse result
-                const topMatch = fuseResults[0]?.item;
-                const action = topMatch ? { label: `View ${topMatch.type}`, path: topMatch.path } : undefined;
+                // Smarter Action selection: 
+                // Prioritize matching the LLM's primary subject
+                let action;
+                const topResult = fuseResults[0]?.item;
+
+                if (topResult) {
+                    action = { label: `View ${topResult.type}`, path: topResult.path };
+                }
+
+                // Fallback action if intent is clear but search is vague
+                if (!action && isProfessionalQuery) {
+                    action = { label: "View Projects", path: "/projects" };
+                }
+
                 return { text: llmAnswer, action };
             }
         }
 
-        // Fallback: Keyword Search Result (if LLM fails or no key)
+        // Fallback
         if (fuseResults.length > 0) {
             const top = fuseResults[0].item;
             return {
-                text: `I found something relevant in **${top.type}**: "${top.title}".`,
+                text: `I found some information regarding Nevin's **${top.type}** work: "${top.title}".`,
                 action: { label: `View ${top.type}`, path: top.path }
             };
         }
 
-        // Fallback
         return {
-            text: "I'm not sure about that. Try asking about his projects like 'AutoML-ify', his experience at 'Zion Cloud', or his skills in 'AI' and 'GCP'.",
+            text: "I'm not exactly sure about that, but Nevin is always open to discussing AI, MLOps, and Finance. Try asking about his work at Zion Cloud or his AutoML-ify project.",
             action: { label: "View Projects", path: "/projects" }
         };
     };
