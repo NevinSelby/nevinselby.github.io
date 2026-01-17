@@ -126,44 +126,30 @@ export const useChat = () => {
             };
         }
 
-        if (lower.includes('experience') || lower.includes('work history') || lower.includes('resume')) {
+        if (lower.includes('experience') || (lower.includes('work') && lower.includes('history')) || lower.includes('resume')) {
             return {
                 text: "Nevin has extensive experience in AI Engineering and Data Science, specially in MLOps and LLM optimization.",
                 action: { label: "View Experience", path: "/experience" }
             };
         }
 
-        if (lower.includes('project') || lower.includes('portfolio') || lower.includes('build')) {
+        if (lower.includes('project') || lower.includes('portfolio')) {
             return {
                 text: "Nevin has built several impactful AI projects, including AutoML-ify and various MLOps pipelines.",
                 action: { label: "View Projects", path: "/projects" }
             };
         }
 
-        if (lower.includes('newsletter') || lower.includes('blog') || lower.includes('write')) {
+        if (lower.includes('newsletter') || lower.includes('blog')) {
             return {
                 text: "Nevin writes a newsletter exploring the intersection of AI and Finance.",
                 action: { label: "Read Newsletter", path: "/newsletter" }
             };
         }
 
-        if (lower.includes('ira') || lower.includes('roth') || lower.includes('401k') || lower.includes('investing guide')) {
-            return {
-                text: "Nevin has written a comprehensive guide on retirement accounts like 401(k)s and IRAs.",
-                action: { label: "Read Guide", path: "https://iterai.beehiiv.com/p/understanding-401-k-ira-roth-ira-regular-investing-and-hsa-in-plain-language" }
-            };
-        }
-
-        if (lower.includes('youtube') || lower.includes('video') || lower.includes('instagram') || lower.includes('travel')) {
-            return {
-                text: "Nevin shares his travel adventures and photography on YouTube and Instagram.",
-                action: { label: "View Media", path: "/media" }
-            };
-        }
-
-        // 2. Intent Detection for Biasing
-        const isProfessionalQuery = /work|project|experience|role|tech|skill|resume|job|position|build|engineer/i.test(lower);
-        const isContentQuery = /article|newsletter|blog|write|finance|topic|read|ira|roth|401k|invest|market|retirement/i.test(lower);
+        // 2. Intent Detection for Biasing (Search Engine Tuning)
+        const isProfessionalQuery = /work|project|experience|role|tech|skill|resume|job|position|build|engineer|architecture/i.test(lower);
+        const isContentQuery = /article|newsletter|blog|write|finance|topic|read|ira|roth|invest|market|retirement|money/i.test(lower);
 
         // 3. Search Aggregation
         const vectorMatch = vectorEngine.search(input);
@@ -177,11 +163,11 @@ export const useChat = () => {
             // Strictly Content
             fuseResults = contentFuse.search(input).slice(0, 3);
         } else {
-            // Hybrid with Bias: Search both, but boost score for Core matches
+            // Hybrid with Bias: Search both, but favor professional info in tie-breaks
             const coreRes = coreFuse.search(input).slice(0, 2);
             const contentRes = contentFuse.search(input).slice(0, 2);
             fuseResults = [...coreRes, ...contentRes].sort((a, b) => {
-                // Penalize newsletter results slightly unless it's a very strong match
+                // Bias towards core results unless content is a very high confidence match
                 const aBias = a.item.type === 'Newsletter' ? 0.25 : 0;
                 const bBias = b.item.type === 'Newsletter' ? 0.25 : 0;
                 return (a.score! + aBias) - (b.score! + bBias);
