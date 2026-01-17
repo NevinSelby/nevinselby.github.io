@@ -15,7 +15,7 @@ export const generateGeminiResponse = async (
     }
 
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }, { apiVersion: "v1" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" }, { apiVersion: "v1" });
 
         const prompt = `
 You are Nevin's professional AI portfolio assistant and router.
