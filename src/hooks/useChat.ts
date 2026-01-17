@@ -24,7 +24,7 @@ const createCoreIndex = () => {
         index.push({
             type: 'Project',
             title: p.title,
-            content: `${p.description} ${p.problem} ${p.techStack.join(' ')}`,
+            content: `${p.description} ${p.problem} ${p.approach} ${p.results.join(' ')} ${p.techStack.join(' ')}`,
             path: `/projects/${p.slug}`,
             slug: p.slug
         });
@@ -35,7 +35,7 @@ const createCoreIndex = () => {
         index.push({
             type: 'Experience',
             title: `${e.role} at ${e.company}`,
-            content: e.highlights.join(' '),
+            content: `${e.description.join(' ')} ${e.highlights.join(' ')}`,
             path: `/experience/${e.slug}`
         });
     });
@@ -97,8 +97,8 @@ export const useChat = () => {
 
     const fuseOptions = {
         keys: [
-            { name: 'title', weight: 2 },
-            { name: 'type', weight: 1.5 },
+            { name: 'title', weight: 3 },
+            { name: 'type', weight: 2 },
             { name: 'content', weight: 1 },
             { name: 'tags', weight: 1.5 }
         ],
@@ -121,22 +121,30 @@ export const useChat = () => {
             };
         }
 
-        // 2. Hybrid Search for Context (Collect more results for Gemini to "choose" from)
+        // 2. Hybrid Search for Context
         const vectorMatch = vectorEngine.search(input);
-        const coreRes = coreFuse.search(input).slice(0, 5);
-        const contentRes = contentFuse.search(input).slice(0, 4);
+        const coreRes = coreFuse.search(input).slice(0, 8); // Increased from 5
+        const contentRes = contentFuse.search(input).slice(0, 5); // Increased from 4
 
         const combinedResults = [...coreRes, ...contentRes].sort((a, b) => (a.score || 1) - (b.score || 1));
 
-        // 3. Construct Context for LLM
-        let context = "";
+        // 3. Construct Identity & Knowledge Context
+        let context = `
+[IDENTITY BLOCK]
+User Identity: Nevin John Selby, AI & Cloud Engineer.
+Title: ${data.profile.title}
+Bio Highlights: ${data.profile.bio.join(' ')}
+Story: ${data.profile.personalJourney?.join(' ') || ''}
+Core Skills: ${data.skills.map(s => `${s.category}: ${s.skills.join(', ')}`).join(' | ')}
+[END IDENTITY BLOCK]\n\n`;
+
         if (vectorMatch) {
-            context += `[Internal Q&A]: ${vectorMatch.answer}\n`;
+            context += `[INTERNAL QA]: ${vectorMatch.answer}\n`;
         }
 
         combinedResults.forEach(res => {
             const item = res.item;
-            context += `[${item.type}] Title: ${item.title}. Summary: ${item.content.substring(0, 500)}. Path: ${item.path}\n`;
+            context += `[${item.type}] Title: ${item.title}. Content: ${item.content.substring(0, 800)}. Path: ${item.path}\n`;
         });
 
         // 4. LLM Generation & Routing
