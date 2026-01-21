@@ -54,6 +54,10 @@ async function fetchYouTube() {
 }
 
 async function fetchBeehiiv() {
+    if (process.env.SKIP_SCRAPE === 'true') {
+        console.log('Skipping Beehiiv fetch (Scraper disabled for CI).');
+        return [];
+    }
     console.log('Fetching Newsletter via Puppeteer (Full Content)...');
     let browser;
     try {
