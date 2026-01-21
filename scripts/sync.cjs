@@ -137,11 +137,10 @@ async function fetchBeehiiv() {
                 articles.push({ ...meta, tags: ['General'], content: meta.title });
             }
         }
-
         return articles;
 
     } catch (e) {
-        console.error('Newsletter Puppeteer Fetch Failed:', e.message);
+        console.error('Beehiiv Fetch Failed (likely Puppeteer env issue):', e.message);
         return [];
     } finally {
         if (browser) await browser.close();
@@ -304,25 +303,29 @@ async function fetchResume() {
 }
 
 async function main() {
-    const videos = await fetchYouTube();
-    const articles = await fetchBeehiiv();
-    const publications = await fetchScholar();
-    const githubRepos = await fetchGithubRepos();
-    const resumeData = await fetchResume();
+    try {
+        const videos = await fetchYouTube();
+        const articles = await fetchBeehiiv();
+        const publications = await fetchScholar();
+        const githubRepos = await fetchGithubRepos();
+        const resumeData = await fetchResume();
 
-    const output = {
-        lastUpdated: new Date().toISOString(),
-        videos,
-        articles,
-        publications,
-        githubRepos,
-        experience: resumeData.experience || [],
-        skills: resumeData.skills || [],
-        projects: resumeData.projects || []
-    };
+        const output = {
+            lastUpdated: new Date().toISOString(),
+            videos,
+            articles,
+            publications,
+            githubRepos,
+            experience: resumeData.experience || [],
+            skills: resumeData.skills || [],
+            projects: resumeData.projects || []
+        };
 
-    fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2));
-    console.log(`Dynamic content updated at ${OUTPUT_FILE}`);
+        fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2));
+        console.log(`Dynamic content updated at ${OUTPUT_FILE}`);
+    } catch (error) {
+        console.error('FATAL: Sync process failed partially but continuing with partial data:', error.message);
+    }
 }
 
 main();
