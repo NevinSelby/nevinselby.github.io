@@ -28,7 +28,7 @@ const staticData = {
         linkedin: "linkedin.com/in/nevinselby",
         social: {
             youtube: "https://youtube.com/@NevinSelby",
-            instagram: "https://instagram.com/nevin_selby",
+            instagram: "https://instagram.com/nevinselby",
             newsletter: "https://iterativeai.beehiiv.com/",
             calendly: "https://calendly.com/nevinselby2001/30min"
         }
@@ -217,5 +217,6 @@ export const data: ContentData = {
     videos: videos || [],
     articles: articles || [],
     publications: publications || staticData.publications,
-    githubRepos: githubRepos || []
+    githubRepos: githubRepos || [],
+    experience: (dynamicData as any).experience?.length > 0 ? (dynamicData as any).experience : staticData.experience
 };

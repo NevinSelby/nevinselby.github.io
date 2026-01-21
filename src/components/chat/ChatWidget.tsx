@@ -1,13 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useChat } from '@/hooks/useChat';
-import { MessageCircle, X, Send, Sparkles, ChevronRight } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles, ChevronRight, Mic } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const ChatWidget = () => {
-    const { messages, isOpen, setIsOpen, isTyping, handleSend, handleAction } = useChat();
+    const { messages, isOpen, setIsOpen, isTyping, isListening, voiceTranscript, startListening, handleSend, handleAction } = useChat();
     const [input, setInput] = useState('');
     const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    // Sync input with voice transcript when listening
+    useEffect(() => {
+        if (isListening && voiceTranscript) {
+            setInput(voiceTranscript);
+        }
+    }, [voiceTranscript, isListening]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -111,16 +118,27 @@ export const ChatWidget = () => {
                         {/* Input */}
                         <form onSubmit={handleSubmit} className="p-4 border-t border-gray-100 bg-gray-50/30">
                             <div className="relative flex items-center gap-2">
+                                <button
+                                    type="button"
+                                    onClick={startListening}
+                                    className={`p-2 rounded-full transition-all ${isListening
+                                        ? 'bg-red-600 text-white animate-pulse shadow-[0_0_15px_rgba(220,38,38,0.5)]'
+                                        : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                                        }`}
+                                    title={isListening ? "Click to send" : "Voice to text"}
+                                >
+                                    {isListening ? <Send className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                                </button>
                                 <input
                                     type="text"
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
-                                    placeholder="Ask anything..."
+                                    placeholder={isListening ? "Listening... click icon to send" : "Ask anything..."}
                                     className="flex-1 bg-white border border-gray-200 rounded-full pl-5 pr-12 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary shadow-sm"
                                 />
                                 <button
                                     type="submit"
-                                    disabled={!input.trim()}
+                                    disabled={!input.trim() || isListening}
                                     className="absolute right-2 p-2 bg-primary text-white rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary/90 transition-all shadow-md active:scale-95"
                                 >
                                     <Send className="w-4 h-4" />

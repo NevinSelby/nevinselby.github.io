@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Fuse from 'fuse.js';
 import { data } from '@/content/data';
@@ -203,11 +203,73 @@ Core Skills: ${data.skills.map(s => `${s.category}: ${s.skills.join(', ')}`).joi
         }
     };
 
+    const [isListening, setIsListening] = useState(false);
+    const [voiceTranscript, setVoiceTranscript] = useState('');
+    const recognitionRef = useRef<any>(null);
+
+    const startListening = () => {
+        if (isListening) {
+            stopListening();
+            return;
+        }
+
+        const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            alert("Your browser does not support speech recognition. Try Chrome or Edge.");
+            return;
+        }
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'en-US';
+        recognition.interimResults = true;
+        recognition.continuous = true;
+        recognitionRef.current = recognition;
+
+        recognition.onstart = () => {
+            setIsListening(true);
+            setVoiceTranscript('');
+        };
+
+        recognition.onend = () => {
+            setIsListening(false);
+        };
+
+        recognition.onerror = (event: any) => {
+            console.error('Speech recognition error:', event.error);
+            setIsListening(false);
+        };
+
+        recognition.onresult = (event: any) => {
+            let currentTranscript = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                currentTranscript += event.results[i][0].transcript;
+            }
+            setVoiceTranscript(currentTranscript);
+        };
+
+        recognition.start();
+    };
+
+    const stopListening = () => {
+        if (recognitionRef.current) {
+            recognitionRef.current.stop();
+            if (voiceTranscript.trim()) {
+                handleSend(voiceTranscript);
+            }
+            setVoiceTranscript('');
+        }
+        setIsListening(false);
+    };
+
     return {
         messages,
         isOpen,
         setIsOpen,
         isTyping,
+        isListening,
+        voiceTranscript,
+        startListening,
+        stopListening,
         handleSend,
         handleAction
     };

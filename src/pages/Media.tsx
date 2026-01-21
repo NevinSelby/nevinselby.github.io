@@ -2,7 +2,7 @@ import { Section } from '@/components/ui/Section';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { Button } from '@/components/ui/Button';
 import { data } from '@/content/data';
-import { Youtube, Instagram, Play } from 'lucide-react';
+import { Youtube, Play } from 'lucide-react';
 
 import { SEO } from '@/components/layout/SEO';
 
@@ -66,36 +66,7 @@ const Media = () => {
                             </div>
                         </div>
 
-                        {/* Photography Grid - Static/Manual for now */}
-                        <div className="space-y-6">
-                            <div className="flex items-center gap-3 text-pink-500 mb-2">
-                                <Instagram className="w-6 h-6" />
-                                <h2 className="text-2xl font-bold text-gray-900 uppercase tracking-wider">Gallery</h2>
-                            </div>
 
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 h-96">
-                                <div className="col-span-2 row-span-2 rounded-2xl overflow-hidden relative group">
-                                    <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Travel" />
-                                </div>
-                                <div className="rounded-2xl overflow-hidden relative group">
-                                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=400&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Travel" />
-                                </div>
-                                <div className="rounded-2xl overflow-hidden relative group">
-                                    <img src="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=400&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Travel" />
-                                </div>
-                                <div className="col-span-2 rounded-2xl overflow-hidden relative group bg-gray-100 flex items-center justify-center">
-                                    <p className="text-gray-400 text-sm">More on Instagram</p>
-                                </div>
-                            </div>
-
-                            <div className="text-center pt-8">
-                                <a href="https://www.instagram.com/nevinselby" target="_blank" rel="noreferrer">
-                                    <Button variant="outline" className="gap-2 hover:bg-pink-50 hover:text-pink-600 hover:border-pink-200">
-                                        Follow Adventures <Instagram className="w-4 h-4" />
-                                    </Button>
-                                </a>
-                            </div>
-                        </div>
 
                     </div>
                 </div>

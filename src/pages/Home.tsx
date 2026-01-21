@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/Badge';
 import { ArrowRight, Download, Github, Linkedin, Terminal, MapPin } from 'lucide-react';
 import { data } from '@/content/data';
 import { SEO } from '@/components/layout/SEO';
+import KnowledgeCanvas from '@/components/KnowledgeCanvas';
 
 const Home = () => {
     const { profile, experience, projects } = data;
@@ -167,6 +168,9 @@ const Home = () => {
                 </div>
             </Section>
 
+            {/* Knowledge Canvas */}
+            <KnowledgeCanvas />
+
             {/* Latest Articles */}
             <Section className="py-24 bg-gray-50 border-t border-gray-200">
                 <div className="container mx-auto px-6 max-w-5xl">
@@ -176,17 +180,16 @@ const Home = () => {
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-6">
-                        {/* Short preview of articles - hardcoded for visual or imported */}
-                        {[
-                            { title: "Agents vs Traditional Automation", date: "Dec 24, 2025", tag: "AI Agents" },
-                            { title: "Design Guardrails for FinAI", date: "Dec 10, 2025", tag: "Safety" },
-                            { title: "Building Multi-Agent Workflows", date: "Nov 12, 2025", tag: "Dev" }
-                        ].map((article, i) => (
-                            <a key={i} href="https://iterai.beehiiv.com/" target="_blank" rel="noreferrer" className="block group">
+                        {(data.articles || []).slice(0, 3).map((article, i) => (
+                            <a key={i} href={article.link} target="_blank" rel="noreferrer" className="block group">
                                 <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all h-full hover:border-primary/30">
                                     <div className="text-xs font-mono text-gray-400 mb-3">{article.date}</div>
                                     <h3 className="font-bold text-lg text-gray-900 mb-2 group-hover:text-primary transition-colors">{article.title}</h3>
-                                    <span className="inline-block bg-gray-50 text-gray-500 text-xs px-2 py-1 rounded-md">{article.tag}</span>
+                                    <div className="flex flex-wrap gap-2">
+                                        {article.tags.map(tag => (
+                                            <span key={tag} className="inline-block bg-gray-50 text-gray-500 text-xs px-2 py-1 rounded-md">{tag}</span>
+                                        ))}
+                                    </div>
                                 </div>
                             </a>
                         ))}

@@ -4,6 +4,7 @@ const Parser = require('rss-parser');
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config();
 const parser = new Parser();
 
 // Config
@@ -200,18 +201,95 @@ async function fetchGithubRepos() {
     }
 }
 
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI(process.env.VITE_GEMINI_API_KEY);
+
+async function fetchResume() {
+    const RESUME_URL = 'https://tinyurl.com/nevin-resume';
+    try {
+        console.log('Fetching & Parsing Resume...');
+        const response = await axios({
+            url: RESUME_URL,
+            method: 'GET',
+            responseType: 'arraybuffer',
+            maxRedirects: 5,
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0'
+            }
+        });
+
+        const contentType = response.headers['content-type'] || '';
+        console.log(`  Resume fetched. Size: ${response.data.length} bytes. Content-Type: ${contentType}`);
+
+        if (!contentType.includes('pdf') && response.data.length < 50000) {
+            console.warn('  Warning: Response might be a redirect page or landing page, not a direct PDF.');
+            const startSnippet = response.data.toString('utf8', 0, 100);
+            if (startSnippet.includes('<html') || startSnippet.includes('<!DOCTYPE')) {
+                console.error('  Error: URL returned HTML instead of PDF. Please ensure the link is a direct download link.');
+                return [];
+            }
+        }
+
+        const pdfBuffer = Buffer.from(response.data);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }, { apiVersion: "v1" });
+
+        const prompt = "Extract the professional experience from this resume. Return a JSON array of objects with fields: role, company, location, period, description (array of strings), highlights (array of strings), and slug (kebab-case company name). ONLY return the JSON array. Do not include markdown code blocks.";
+
+        const result = await model.generateContent([
+            {
+                inlineData: {
+                    data: pdfBuffer.toString('base64'),
+                    mimeType: "application/pdf"
+                }
+            },
+            prompt
+        ]);
+
+        const text = result.response.text();
+        console.log('  LLM Response received. Length:', text.length);
+
+        // Try to parse JSON directly or extract it
+        try {
+            const cleanText = text.replace(/```json|```/g, '').trim();
+            const data = JSON.parse(cleanText);
+            if (Array.isArray(data)) {
+                console.log(`  Successfully parsed ${data.length} experiences.`);
+                return data;
+            }
+        } catch (parseErr) {
+            console.warn('  Direct JSON parse failed, trying regex match...');
+            const jsonMatch = text.match(/\[[\s\S]*\]/);
+            if (jsonMatch) {
+                return JSON.parse(jsonMatch[0]);
+            }
+        }
+
+        console.warn('  No valid experience array found in LLM response.');
+        return [];
+    } catch (e) {
+        console.error('Resume Parse Failed:', e.message);
+        if (e.response) {
+            console.error('  Response Status:', e.response.status);
+            console.error('  Response Headers:', e.response.headers);
+        }
+        return [];
+    }
+}
+
 async function main() {
     const videos = await fetchYouTube();
     const articles = await fetchBeehiiv();
     const publications = await fetchScholar();
     const githubRepos = await fetchGithubRepos();
+    const experience = await fetchResume();
 
     const output = {
         lastUpdated: new Date().toISOString(),
         videos,
         articles,
         publications,
-        githubRepos
+        githubRepos,
+        experience
     };
 
     fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2));
@@ -220,6 +298,7 @@ async function main() {
     console.log(`- Articles: ${articles.length}`);
     console.log(`- Publications: ${publications.length}`);
     console.log(`- GitHub Repos: ${githubRepos.length}`);
+    console.log(`- Dynamic Experiences: ${experience.length}`);
 }
 
 main();
