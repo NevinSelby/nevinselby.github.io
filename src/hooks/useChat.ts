@@ -206,6 +206,7 @@ Core Skills: ${data.skills.map(s => `${s.category}: ${s.skills.join(', ')}`).joi
     const [isListening, setIsListening] = useState(false);
     const [voiceTranscript, setVoiceTranscript] = useState('');
     const recognitionRef = useRef<any>(null);
+    const shouldBeListeningRef = useRef(false);
 
     const startListening = () => {
         if (isListening) {
@@ -219,6 +220,8 @@ Core Skills: ${data.skills.map(s => `${s.category}: ${s.skills.join(', ')}`).joi
             return;
         }
 
+        shouldBeListeningRef.current = true;
+
         const recognition = new SpeechRecognition();
         recognition.lang = 'en-US';
         recognition.interimResults = true;
@@ -231,28 +234,55 @@ Core Skills: ${data.skills.map(s => `${s.category}: ${s.skills.join(', ')}`).joi
         };
 
         recognition.onend = () => {
-            setIsListening(false);
+            // Auto-restart if we should still be listening (bypasses browser timeouts)
+            if (shouldBeListeningRef.current) {
+                try {
+                    recognition.start();
+                } catch (e) {
+                    console.error("Failed to restart recognition:", e);
+                    setIsListening(false);
+                }
+            } else {
+                setIsListening(false);
+            }
         };
 
         recognition.onerror = (event: any) => {
             console.error('Speech recognition error:', event.error);
-            setIsListening(false);
+            // If it's a 'no-speech' error, we don't necessarily want to stop UI-wise 
+            // as we want it to stay persistent.
+            if (event.error === 'no-speech' && shouldBeListeningRef.current) {
+                return; // Let onend handle the restart
+            }
+            if (event.error !== 'no-speech') {
+                setIsListening(false);
+                shouldBeListeningRef.current = false;
+            }
         };
 
         recognition.onresult = (event: any) => {
-            let currentTranscript = '';
-            for (let i = event.resultIndex; i < event.results.length; i++) {
-                currentTranscript += event.results[i][0].transcript;
+            let finalTranscript = '';
+            let interimTranscript = '';
+
+            for (let i = 0; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    finalTranscript += event.results[i][0].transcript;
+                } else {
+                    interimTranscript += event.results[i][0].transcript;
+                }
             }
-            setVoiceTranscript(currentTranscript);
+
+            setVoiceTranscript(finalTranscript + interimTranscript);
         };
 
         recognition.start();
     };
 
     const stopListening = () => {
+        shouldBeListeningRef.current = false;
         if (recognitionRef.current) {
             recognitionRef.current.stop();
+            // We'll send the message in handleSend which will be called manually or here
             if (voiceTranscript.trim()) {
                 handleSend(voiceTranscript);
             }
