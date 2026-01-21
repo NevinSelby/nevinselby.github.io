@@ -207,6 +207,7 @@ Core Skills: ${data.skills.map(s => `${s.category}: ${s.skills.join(', ')}`).joi
     const [voiceTranscript, setVoiceTranscript] = useState('');
     const recognitionRef = useRef<any>(null);
     const shouldBeListeningRef = useRef(false);
+    const silenceTimerRef = useRef<any>(null);
 
     const startListening = () => {
         if (isListening) {
@@ -234,7 +235,6 @@ Core Skills: ${data.skills.map(s => `${s.category}: ${s.skills.join(', ')}`).joi
         };
 
         recognition.onend = () => {
-            // Auto-restart if we should still be listening (bypasses browser timeouts)
             if (shouldBeListeningRef.current) {
                 try {
                     recognition.start();
@@ -249,18 +249,23 @@ Core Skills: ${data.skills.map(s => `${s.category}: ${s.skills.join(', ')}`).joi
 
         recognition.onerror = (event: any) => {
             console.error('Speech recognition error:', event.error);
-            // If it's a 'no-speech' error, we don't necessarily want to stop UI-wise 
-            // as we want it to stay persistent.
             if (event.error === 'no-speech' && shouldBeListeningRef.current) {
-                return; // Let onend handle the restart
+                return;
             }
             if (event.error !== 'no-speech') {
                 setIsListening(false);
                 shouldBeListeningRef.current = false;
+                if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
             }
         };
 
         recognition.onresult = (event: any) => {
+            // Reset silence timer
+            if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+            silenceTimerRef.current = setTimeout(() => {
+                stopListening();
+            }, 2000); // 2 seconds of silence to auto-send
+
             let finalTranscript = '';
             let interimTranscript = '';
 
@@ -280,13 +285,20 @@ Core Skills: ${data.skills.map(s => `${s.category}: ${s.skills.join(', ')}`).joi
 
     const stopListening = () => {
         shouldBeListeningRef.current = false;
+        if (silenceTimerRef.current) {
+            clearTimeout(silenceTimerRef.current);
+            silenceTimerRef.current = null;
+        }
+
         if (recognitionRef.current) {
             recognitionRef.current.stop();
-            // We'll send the message in handleSend which will be called manually or here
-            if (voiceTranscript.trim()) {
-                handleSend(voiceTranscript);
-            }
-            setVoiceTranscript('');
+            // Get the latest transcript from the state
+            setVoiceTranscript(prev => {
+                if (prev.trim()) {
+                    handleSend(prev);
+                }
+                return '';
+            });
         }
         setIsListening(false);
     };
