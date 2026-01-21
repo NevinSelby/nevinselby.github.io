@@ -1,9 +1,7 @@
 import { useState, useMemo, useRef } from 'react';
+import { data } from '@/content/data';
 import { useNavigate } from 'react-router-dom';
 import Fuse from 'fuse.js';
-import { data } from '@/content/data';
-import { VectorEngine } from '@/utils/vectorSearch';
-import { knowledgeBase } from '@/content/knowledge_base';
 
 interface Message {
     id: string;
@@ -40,13 +38,23 @@ const createCoreIndex = () => {
         });
     });
 
-    // Skills
-    data.skills.forEach(s => {
+    // GitHub Repos (Dynamic)
+    (data.githubRepos || []).forEach(repo => {
         index.push({
-            type: 'Skill',
-            title: s.category,
-            content: s.skills.join(' '),
-            path: '/about'
+            type: 'GitHub Repository',
+            title: repo.name,
+            content: `${repo.description || ''} ${repo.language || ''}`,
+            path: repo.html_url
+        });
+    });
+
+    // YouTube Videos (Dynamic)
+    (data.videos || []).forEach(video => {
+        index.push({
+            type: 'Video',
+            title: video.title,
+            content: `YouTube video about travel or tech. Published on ${video.date}`,
+            path: video.link
         });
     });
 
@@ -57,6 +65,16 @@ const createCoreIndex = () => {
             title: p.title,
             content: p.summary,
             path: '/publications'
+        });
+    });
+
+    // Skills
+    data.skills.forEach(s => {
+        index.push({
+            type: 'Skill',
+            title: s.category,
+            content: s.skills.join(' '),
+            path: '/about'
         });
     });
 
@@ -93,7 +111,6 @@ export const useChat = () => {
 
     const coreIndex = useMemo(() => createCoreIndex(), []);
     const contentIndex = useMemo(() => createContentIndex(), []);
-    const vectorEngine = useMemo(() => new VectorEngine(knowledgeBase), []);
 
     const fuseOptions = {
         keys: [
@@ -122,7 +139,6 @@ export const useChat = () => {
         }
 
         // 2. Hybrid Search for Context
-        const vectorMatch = vectorEngine.search(input);
         const coreRes = coreFuse.search(input).slice(0, 8); // Increased from 5
         const contentRes = contentFuse.search(input).slice(0, 5); // Increased from 4
 
@@ -131,21 +147,40 @@ export const useChat = () => {
         // 3. Construct Identity & Knowledge Context
         let context = `
 [IDENTITY BLOCK]
-User Identity: Nevin John Selby, AI & Cloud Engineer.
+Name: ${data.profile.name}
 Title: ${data.profile.title}
-Bio Highlights: ${data.profile.bio.join(' ')}
+One-Liner: ${data.profile.oneLiner}
+Bio: ${data.profile.bio.join(' ')}
 Story: ${data.profile.personalJourney?.join(' ') || ''}
-Core Skills: ${data.skills.map(s => `${s.category}: ${s.skills.join(', ')}`).join(' | ')}
-[END IDENTITY BLOCK]\n\n`;
+[END IDENTITY BLOCK]
 
-        if (vectorMatch) {
-            context += `[INTERNAL QA]: ${vectorMatch.answer}\n`;
-        }
+[NAVIGATION MAP]
+- Home: /
+- About: /about
+- Experience: /experience
+- Projects: /projects
+- Research: /publications
+- Newsletter: /newsletter
+- Media/Vlogs: /media
+- Contact: /contact
+[END NAVIGATION MAP]
 
-        combinedResults.forEach(res => {
+[DYNAMIC KNOWLEDGE BASE]
+${combinedResults.map(res => {
             const item = res.item;
-            context += `[${item.type}] Title: ${item.title}. Content: ${item.content.substring(0, 800)}. Path: ${item.path}\n`;
-        });
+            return `[${item.type.toUpperCase()}]
+Title: ${item.title}
+Content: ${item.content}
+Path: ${item.path}`;
+        }).join('\n---\n')}
+[END DYNAMIC KNOWLEDGE BASE]
+
+INSTRUCTIONS:
+1. You are Nevin's digital concierge. Use the context above to answer accurately.
+2. If you find a relevant "Path" in the context, ALWAYS suggest it using [ACTION] Label|Path.
+3. For general sections (About, Projects, etc.), use the NAVIGATION MAP to suggest the correct path.
+4. Keep answers professional but conversational.
+`;
 
         // 4. LLM Generation & Routing
         if (context.length > 5) {

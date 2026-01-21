@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Terminal } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from '../ui/Button';
+import logo from '@/assets/logo.png';
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -32,9 +33,11 @@ export const Navbar = () => {
             <div className="container mx-auto px-6 flex items-center justify-between">
 
                 <Link to="/" className="flex items-center gap-2 group z-50 relative">
-                    <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/30 group-hover:scale-105 transition-transform">
-                        <Terminal className="w-6 h-6" />
-                    </div>
+                    <img
+                        src={logo}
+                        alt="Logo"
+                        className="w-10 h-10 object-contain rounded-lg group-hover:scale-105 transition-transform"
+                    />
                     <span className={`text-xl font-bold tracking-tight transition-colors ${scrolled || isOpen ? 'text-gray-900' : 'text-gray-900'}`}>
                         Nevin<span className="text-primary">.Selby</span>
                     </span>

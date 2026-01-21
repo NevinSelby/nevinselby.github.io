@@ -205,9 +205,9 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.VITE_GEMINI_API_KEY);
 
 async function fetchResume() {
-    const RESUME_URL = 'https://tinyurl.com/nevin-resume';
+    const RESUME_URL = 'https://drive.google.com/uc?export=download&id=1_qjyKLFq1ikr0IbLCwDZBr5Z0boTD7e1';
     try {
-        console.log('Fetching & Parsing Resume...');
+        console.log('Fetching & Parsing Resume (Deep Extraction)...');
         const response = await axios({
             url: RESUME_URL,
             method: 'GET',
@@ -218,22 +218,30 @@ async function fetchResume() {
             }
         });
 
-        const contentType = response.headers['content-type'] || '';
-        console.log(`  Resume fetched. Size: ${response.data.length} bytes. Content-Type: ${contentType}`);
-
-        if (!contentType.includes('pdf') && response.data.length < 50000) {
-            console.warn('  Warning: Response might be a redirect page or landing page, not a direct PDF.');
-            const startSnippet = response.data.toString('utf8', 0, 100);
-            if (startSnippet.includes('<html') || startSnippet.includes('<!DOCTYPE')) {
-                console.error('  Error: URL returned HTML instead of PDF. Please ensure the link is a direct download link.');
-                return [];
-            }
-        }
-
         const pdfBuffer = Buffer.from(response.data);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }, { apiVersion: "v1" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-        const prompt = "Extract the professional experience from this resume. Return a JSON array of objects with fields: role, company, location, period, description (array of strings), highlights (array of strings), and slug (kebab-case company name). ONLY return the JSON array. Do not include markdown code blocks.";
+        const prompt = `Act as an expert career assistant. Extract the following information from this resume and return it as a single JSON object.
+
+        CRITICAL RULES:
+        - NO HALLUCINATIONS: If a piece of info is missing, use "" or an empty array []. 
+        - DO NOT USE PLACEHOLDERS: Never return "https://github.com" or "https://preview.com". If the exact URL is not in the text, leave it as "".
+        - URL Extraction: Scan every project and the header for URLs. 
+            - "links.github" MUST be the actual full URL found for a repo (e.g., https://github.com/username/repo).
+            - "links.live" MUST be the actual full URL found for a demo (e.g., https://project.streamlit.app).
+
+        GUIDELINES FOR PROJECTS:
+        - Inference: For each project, analyze the title and bullet points. Infer and summarize:
+            - "problem": The core pain point or technical challenge the project addresses.
+            - "approach": the specific methodology, architecture, or workflow used to solve it.
+            - "results": A JSON array of specific outcomes, metrics, or achievements.
+        
+        Information required:
+        1. experience: Array of objects (role, company, location, period, description (array of sentences), highlights (array of key achievements), slug (kebab-case company name)).
+        2. skills: Array of objects (category, skills (array)).
+        3. projects: Array of objects (title, subtitle, period, description (string summary), problem, approach, results (array), techStack (array), slug (kebab-case project name), links: { github, live }).
+        
+        ONLY return the JSON object. Do not include markdown code blocks or any introductory text.`;
 
         const result = await model.generateContent([
             {
@@ -246,33 +254,52 @@ async function fetchResume() {
         ]);
 
         const text = result.response.text();
-        console.log('  LLM Response received. Length:', text.length);
-
-        // Try to parse JSON directly or extract it
+        console.log(`  Raw AI Response (first 100 chars): ${text.substring(0, 100)}...`);
         try {
             const cleanText = text.replace(/```json|```/g, '').trim();
-            const data = JSON.parse(cleanText);
-            if (Array.isArray(data)) {
-                console.log(`  Successfully parsed ${data.length} experiences.`);
-                return data;
-            }
-        } catch (parseErr) {
-            console.warn('  Direct JSON parse failed, trying regex match...');
-            const jsonMatch = text.match(/\[[\s\S]*\]/);
-            if (jsonMatch) {
-                return JSON.parse(jsonMatch[0]);
-            }
-        }
+            const extracted = JSON.parse(cleanText);
 
-        console.warn('  No valid experience array found in LLM response.');
-        return [];
-    } catch (e) {
-        console.error('Resume Parse Failed:', e.message);
-        if (e.response) {
-            console.error('  Response Status:', e.response.status);
-            console.error('  Response Headers:', e.response.headers);
+            // Post-processing to ensure structural integrity
+            const cleanExperience = (extracted.experience || []).map(exp => ({
+                ...exp,
+                slug: exp.slug || exp.company.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+                highlights: exp.highlights || []
+            }));
+
+            const cleanProjects = (extracted.projects || []).map(p => ({
+                ...p,
+                slug: p.slug || p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+                links: {
+                    github: p.links?.github || "",
+                    live: p.links?.live || ""
+                },
+                description: Array.isArray(p.description) ? p.description.join(' ') : (p.description || ""),
+                techStack: p.techStack || []
+            }));
+
+            console.log(`  Successfully extracted and cleaned deep data.`);
+            return {
+                experience: cleanExperience,
+                skills: extracted.skills || [],
+                projects: cleanProjects
+            };
+        } catch (parseErr) {
+            console.warn('  JSON parse failed, checking for fallback match...');
+            const jsonMatch = text.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+                const extracted = JSON.parse(jsonMatch[0]);
+                // Apply same cleaning for fallback
+                return {
+                    experience: (extracted.experience || []).map(exp => ({ ...exp, slug: exp.slug || exp.company.toLowerCase().replace(/[^a-z0-9]+/g, '-') })),
+                    skills: extracted.skills || [],
+                    projects: (extracted.projects || []).map(p => ({ ...p, slug: p.slug || p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'), links: { github: "", live: "" } }))
+                };
+            }
         }
-        return [];
+        return { experience: [], skills: [], projects: [] };
+    } catch (e) {
+        console.error('Resume Deep Extraction Failed:', e.message);
+        return { experience: [], skills: [], projects: [] };
     }
 }
 
@@ -281,7 +308,7 @@ async function main() {
     const articles = await fetchBeehiiv();
     const publications = await fetchScholar();
     const githubRepos = await fetchGithubRepos();
-    const experience = await fetchResume();
+    const resumeData = await fetchResume();
 
     const output = {
         lastUpdated: new Date().toISOString(),
@@ -289,16 +316,13 @@ async function main() {
         articles,
         publications,
         githubRepos,
-        experience
+        experience: resumeData.experience || [],
+        skills: resumeData.skills || [],
+        projects: resumeData.projects || []
     };
 
     fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2));
     console.log(`Dynamic content updated at ${OUTPUT_FILE}`);
-    console.log(`- Videos: ${videos.length}`);
-    console.log(`- Articles: ${articles.length}`);
-    console.log(`- Publications: ${publications.length}`);
-    console.log(`- GitHub Repos: ${githubRepos.length}`);
-    console.log(`- Dynamic Experiences: ${experience.length}`);
 }
 
 main();

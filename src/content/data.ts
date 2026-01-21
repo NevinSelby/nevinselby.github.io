@@ -3,7 +3,7 @@ import type { ContentData } from './types';
 // @ts-ignore
 import dynamicData from './dynamic.json';
 
-const { videos, articles, publications, githubRepos } = dynamicData as any || {};
+const { videos, articles, publications, githubRepos, skills: dynamicSkills, projects: dynamicProjects, experience: dynamicExperience } = dynamicData as any || {};
 
 // Static data definition (merged from previous file state)
 const staticData = {
@@ -218,5 +218,21 @@ export const data: ContentData = {
     articles: articles || [],
     publications: publications || staticData.publications,
     githubRepos: githubRepos || [],
-    experience: (dynamicData as any).experience?.length > 0 ? (dynamicData as any).experience : staticData.experience
+    skills: dynamicSkills?.length > 0 ? dynamicSkills : staticData.skills,
+    projects: (dynamicProjects || []).map((dp: any) => {
+        const staticP = staticData.projects.find(sp =>
+            sp.slug === dp.slug ||
+            dp.slug.startsWith(sp.slug) ||
+            sp.title.toLowerCase().includes(dp.title.toLowerCase()) ||
+            dp.title.toLowerCase().includes(sp.title.toLowerCase())
+        );
+        return {
+            ...dp,
+            links: {
+                github: dp.links?.github || staticP?.links?.github || "",
+                live: dp.links?.live || staticP?.links?.live || ""
+            }
+        };
+    }).concat(dynamicProjects?.length > 0 ? [] : staticData.projects),
+    experience: dynamicExperience?.length > 0 ? dynamicExperience : staticData.experience
 };

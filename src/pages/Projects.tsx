@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { SEO } from '@/components/layout/SEO';
 
 const Projects = () => {
-    const { projects } = data;
+    const projects = data.projects || [];
     const [search, setSearch] = useState('');
     const [filter, setFilter] = useState('All');
 
@@ -123,9 +123,11 @@ const Projects = () => {
                                             <Link to={`/projects/${project.slug}`} className={buttonVariants({ className: "w-full group" })}>
                                                 Details <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                                             </Link>
-                                            <a href={project.links.github} target="_blank" rel="noreferrer" className={buttonVariants({ variant: 'secondary', className: "w-full" })}>
-                                                GitHub <Github className="w-4 h-4 ml-2" />
-                                            </a>
+                                            {project.links?.github && (
+                                                <a href={project.links.github} target="_blank" rel="noreferrer" className={buttonVariants({ variant: 'secondary', className: "w-full" })}>
+                                                    GitHub <Github className="w-4 h-4 ml-2" />
+                                                </a>
+                                            )}
                                         </div>
 
                                     </GlassCard>

@@ -10,8 +10,8 @@ import KnowledgeCanvas from '@/components/KnowledgeCanvas';
 
 const Home = () => {
     const { profile, experience, projects } = data;
-    const leadExperience = experience[0];
-    const featuredProjects = projects.slice(0, 2);
+    const leadExperience = experience?.[0];
+    const featuredProjects = projects?.slice(0, 2) || [];
 
     return (
         <div className="min-h-screen">
@@ -146,9 +146,11 @@ const Home = () => {
                                 <div className="flex-1">
                                     <div className="flex justify-between items-start mb-4">
                                         <h3 className="text-2xl font-bold text-gray-900">{project.title}</h3>
-                                        <a href={project.links.github} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-black">
-                                            <Github className="w-5 h-5" />
-                                        </a>
+                                        {project.links?.github && (
+                                            <a href={project.links.github} target="_blank" rel="noreferrer" className="text-gray-400 hover:text-black">
+                                                <Github className="w-5 h-5" />
+                                            </a>
+                                        )}
                                     </div>
                                     <p className="text-lg text-primary font-medium mb-3">{project.subtitle}</p>
                                     <p className="text-gray-600 mb-6 line-clamp-3">{project.description}</p>
