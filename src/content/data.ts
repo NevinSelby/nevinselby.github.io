@@ -163,6 +163,11 @@ const staticData = {
             link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:u5HHmVD_uO8C"
         },
         {
+            title: "An Efficient Stock Price Prediction Mechanism Using Multivariate Sequential LSTM Autoencoder",
+            summary: "G RML, N Selby, A Taparia. 2023",
+            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:d1gkVwhDpl0C"
+        },
+        {
             title: "Multi-sequential Neural Network Models for Stock Price Forecasting",
             summary: "JV Sheba Elizabeth Thomas, Rubell Marion Lincy George, Aditya Taparia. 2023",
             link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:9yKSN-GCB0IC"
