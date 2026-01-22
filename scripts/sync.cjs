@@ -54,100 +54,41 @@ async function fetchYouTube() {
 }
 
 async function fetchBeehiiv() {
-    if (process.env.SKIP_SCRAPE === 'true') {
-        console.log('Skipping Beehiiv fetch (Scraper disabled for CI).');
-        return [];
-    }
-    console.log('Fetching Newsletter via Puppeteer (Full Content)...');
-    let browser;
+    console.log('Fetching Newsletter via Axios/Cheerio...');
     try {
-        browser = await puppeteer.launch({
-            headless: 'new',
-            args: ['--no-sandbox', '--disable-setuid-sandbox'] // for safety in some envs
-        });
-        const page = await browser.newPage();
-
-        // Go to homepage to find links
-        await page.goto(BEEHIIV_URL, { waitUntil: 'domcontentloaded' });
-
-        // Extract links
-        const articleMetadata = await page.evaluate(() => {
-            const items = [];
-            // Look for links that start with /p/
-            const links = Array.from(document.querySelectorAll('a[href^="/p/"]'));
-
-            links.forEach(link => {
-                const titleElement = link.querySelector('h2, h3, h4, div.title');
-                const title = titleElement ? titleElement.innerText.trim() : link.innerText.trim();
-                const href = link.getAttribute('href');
-
-                if (title && href && title.length > 5) { // Filter out empty or icon links
-                    items.push({
-                        title,
-                        link: `https://iterai.beehiiv.com${href}`,
-                        // Try to find nearby date or summary if possible, simplified for now
-                        summary: '',
-                        date: '2026'
-                    });
-                }
-            });
-            // Dedupe
-            return items.filter((v, i, a) => a.findIndex(t => (t.link === v.link)) === i);
-        });
-
-        console.log(`  Found ${articleMetadata.length} article links.`);
-
-        const articles = [];
-        const topArticles = articleMetadata.slice(0, 5); // Fetch top 5 full content
-
-        for (const meta of topArticles) {
-            console.log(`  - Scything content for: ${meta.title}`);
-            try {
-                await page.goto(meta.link, { waitUntil: 'networkidle2', timeout: 30000 });
-
-                // Get content
-                const pageData = await page.evaluate(() => {
-                    // Try generic selectors for main content
-                    const contentEl = document.querySelector('.prose') ||
-                        document.querySelector('.post-content') ||
-                        document.querySelector('article') ||
-                        document.body;
-
-                    const timeEl = document.querySelector('time');
-                    const date = timeEl ? timeEl.innerText.trim() : '2026';
-
-                    // Get text content but preserve some spacing
-                    return {
-                        content: contentEl.innerText.trim(),
-                        date
-                    };
-                });
-
-                const cleanContent = pageData.content.replace(/\s+/g, ' ').substring(0, 15000);
-                const summary = cleanContent.substring(0, 200) + '...';
-                const tags = generateTags(meta.title + ' ' + summary + ' ' + cleanContent);
-
-                articles.push({
-                    ...meta,
-                    date: pageData.date,
-                    summary: summary,
-                    content: cleanContent,
-                    tags
-                });
-
-            } catch (err) {
-                console.error(`    Failed to scrape pages content for ${meta.link}: ${err.message}`);
-                // Fallback basic
-                articles.push({ ...meta, tags: ['General'], content: meta.title });
+        const { data: html } = await axios.get(BEEHIIV_URL, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
             }
-        }
-        return articles;
+        });
+        const $ = cheerio.load(html);
+        const articles = [];
 
+        // Beehiiv layout: Look for links that start with /p/
+        $('a[href^="/p/"]').each((i, el) => {
+            const $el = $(el);
+            const href = $el.attr('href');
+            // Look for title in child headings or nearby
+            const title = $el.find('h2, h3, h4').text().trim() || $el.text().trim();
+            const summary = $el.find('p, div.summary, .post-preview-summary').text().trim() || "";
+
+            // Basic dedupe and filter
+            if (title && href && title.length > 5 && !articles.find(a => a.link.includes(href))) {
+                articles.push({
+                    title,
+                    link: href.startsWith('http') ? href : `https://iterai.beehiiv.com${href}`,
+                    summary: summary.slice(0, 300),
+                    date: "2026",
+                    tags: generateTags(title + " " + summary)
+                });
+            }
+        });
+
+        console.log(`  Found ${articles.length} articles.`);
+        return articles.slice(0, 10);
     } catch (e) {
-        console.error('Beehiiv Fetch Failed (likely Puppeteer env issue):', e.message);
+        console.error('Beehiiv Fetch Failed:', e.message);
         return [];
-    } finally {
-        if (browser) await browser.close();
     }
 }
 
