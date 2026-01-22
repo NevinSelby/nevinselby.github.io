@@ -186,8 +186,8 @@ async function fetchResume() {
         });
 
         const pdfBuffer = Buffer.from(response.data);
-        // Corrected Model Version: gemini-1.5-flash is stable and fast
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        // Using -latest specifically to avoid version mismatch in v1beta
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
         const prompt = `Act as an expert career assistant. Extract the following information from this resume and return it as a single JSON object.
 

@@ -148,14 +148,19 @@ const staticData = {
     ],
     publications: [
         {
-            title: "An Efficient Stock Price Prediction Mechanism Using Multivariate Sequential LSTM Autoencoder",
-            summary: "Explored novel architectures for stock market forecasting using deep learning, achieving significant improvements in predictive accuracy over baseline models.",
-            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:u-x6o8ySG0sC"
+            title: "An efficient stock price prediction mechanism using multivariate sequential LSTM autoencoder",
+            summary: "N Selby, A Taparia. 2023",
+            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:u5HHmVD_uO8C"
+        },
+        {
+            title: "Multi-sequential Neural Network Models for Stock Price Forecasting",
+            summary: "JV Sheba Elizabeth Thomas, Rubell Marion Lincy George, Aditya Taparia. 2023",
+            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:9yKSN-GCB0IC"
         },
         {
             title: "Advantage Actor-Critic Reinforcement Learning with Technical Indicators for Stock Trading Decisions",
-            summary: "Applied reinforcement learning techniques combined with traditional technical analysis to optimize algorithmic trading strategies.",
-            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:u5HHmBy_u04C"
+            summary: "S Sagar, V Narayanan, D Binu, N Selby, SE Thomas. 2023",
+            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:u-x6o8ySG0sC"
         }
     ],
     articles: [
