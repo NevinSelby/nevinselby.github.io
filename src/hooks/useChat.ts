@@ -164,7 +164,7 @@ export const useChat = () => {
 
         // 2. Hybrid Search for Context
         const coreRes = coreFuse.search(input).slice(0, 8); // Increased from 5
-        const contentRes = contentFuse.search(input).slice(0, 5); // Increased from 4
+        const contentRes = contentFuse.search(input).slice(0, 8); // Increased from 5
 
         const combinedResults = [...coreRes, ...contentRes].sort((a, b) => (a.score || 1) - (b.score || 1));
 
