@@ -16,6 +16,7 @@ export interface Profile {
     email: string;
     phone: string;
     linkedin: string;
+    resume: string;
     website: string;
     social: {
         youtube: string;
