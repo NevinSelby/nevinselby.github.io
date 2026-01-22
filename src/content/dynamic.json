@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-01-22T06:15:21.078Z",
+  "lastUpdated": "2026-01-22T06:16:00.021Z",
   "videos": [
     {
       "title": "From Losing My Phone to Seeing a Celebrity | F1 Student's first Ski Trip",
@@ -400,9 +400,203 @@
       "updated_at": "Mar 8, 2021"
     }
   ],
-  "experience": [],
-  "skills": [],
-  "projects": [],
-  "education": [],
-  "certifications": []
+  "experience": [
+    {
+      "role": "AI Engineer",
+      "company": "Zion Cloud Solutions",
+      "location": "Greater Chicago Area, IL",
+      "period": "Aug 2025 - Present",
+      "description": [
+        "Built scalable Vertex AI pipelines, improving model deployment speed by 40% and reducing latency by 35%.",
+        "Engineered Cloud Functions as runtime tools for Gemini LLM, maintaining 99.8% uptime under production load.",
+        "Designed client workflows using Pub/Sub and Cloud Run, increasing API throughput by 25% overall.",
+        "Created RAG-powered agents, improving automation accuracy by 30% while reducing manual operations by 40%.",
+        "Optimized system-level runtime containers reducing cloud compute costs 20% across multiple inference workloads."
+      ],
+      "highlights": [
+        "Improved model deployment speed by 40%",
+        "Reduced latency by 35%",
+        "Maintained 99.8% uptime",
+        "Increased API throughput by 25%",
+        "Improved automation accuracy by 30%",
+        "Reduced manual operations by 40%",
+        "Reduced cloud compute costs 20%"
+      ],
+      "slug": "zion-cloud-solutions"
+    },
+    {
+      "role": "Data Scientist",
+      "company": "Wisconsin School of Business & Tuck School of Business",
+      "location": "Madison, WI",
+      "period": "Sept 2024 - Aug 2025",
+      "description": [
+        "Implemented GPT-3.5 sentiment models identifying 12% negative sentiment increase after major unionization events.",
+        "Fine-tuned BERT classifiers improving precision by 18% and reducing API inference cost 25% overall.",
+        "Built CLIP-based multimodal price prediction model, improving accuracy by 23% over previous baselines.",
+        "Automated Python-SQL ETL workflows reducing preprocessing time by 40% and increasing data reliability significantly."
+      ],
+      "highlights": [
+        "Identified 12% negative sentiment increase",
+        "Improved precision by 18%",
+        "Reduced API inference cost 25%",
+        "Improved accuracy by 23%",
+        "Reduced preprocessing time by 40%"
+      ],
+      "slug": "wisconsin-school-of-business-tuck-school-of-business"
+    },
+    {
+      "role": "AI Research Assistant",
+      "company": "UW College of Agricultural & Life Sciences",
+      "location": "Madison, WI",
+      "period": "Sept 2024 - Mar 2025",
+      "description": [
+        "Trained ResNet50 and YOLOv8 models improving detection accuracy 25% and precision 15% through augmentation.",
+        "Developed CLIP-based semi-supervised auto-labeling pipeline reducing manual labeling effort 80% overall.",
+        "Deployed ML pipelines on AWS SageMaker cutting compute overhead 30% and storage inefficiencies 20%.",
+        "Collaborated with growers translating model outputs into actionable insights improving agricultural efficiency."
+      ],
+      "highlights": [
+        "Improved detection accuracy 25%",
+        "Improved precision 15%",
+        "Reduced manual labeling effort 80%",
+        "Cut compute overhead 30%",
+        "Reduced storage inefficiencies 20%"
+      ],
+      "slug": "uw-college-of-agricultural-life-sciences"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Languages",
+      "skills": [
+        "Python",
+        "C++",
+        "SQL",
+        "Bash"
+      ]
+    },
+    {
+      "category": "ML Frameworks",
+      "skills": [
+        "TensorFlow",
+        "PyTorch",
+        "Scikit-learn",
+        "BERT",
+        "CLIP",
+        "GPT",
+        "XGBoost"
+      ]
+    },
+    {
+      "category": "Cloud Platforms",
+      "skills": [
+        "GCP (Vertex AI, Cloud Functions, Pub/Sub)",
+        "AWS (SageMaker, Lambda, S3, EC2)"
+      ]
+    },
+    {
+      "category": "DevOps & Infra",
+      "skills": [
+        "Docker",
+        "Kubernetes",
+        "MLflow",
+        "Airflow",
+        "Git",
+        "CI/CD"
+      ]
+    },
+    {
+      "category": "Core Competencies",
+      "skills": [
+        "Systems Programming",
+        "Runtime Optimization",
+        "MLOps",
+        "Model Deployment",
+        "Data Engineering"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "AutoML-ify: Automate Your Machine Learning Pipeline Effortlessly",
+      "subtitle": "",
+      "period": "Jun 2024 - Feb 2025",
+      "description": "Launched a no-code AutoML tool to automate EDA, model selection, and tuning, reducing initial machine learning project setup time from 4 hours to 30 minutes. Integrated over 10 classification and regression algorithms with RandomizedSearchCV and Plotly visualizations, improving baseline validation AUC by an average of 8%.",
+      "problem": "High initial setup time for machine learning projects and the need for automated model selection and tuning.",
+      "approach": "Developed a no-code AutoML tool integrating multiple classification and regression algorithms with RandomizedSearchCV and Plotly visualizations.",
+      "results": [
+        "Reduced initial machine learning project setup time from 4 hours to 30 minutes",
+        "Improved baseline validation AUC by an average of 8%"
+      ],
+      "techStack": [
+        "AutoML",
+        "EDA",
+        "Model Selection",
+        "Model Tuning",
+        "Classification Algorithms",
+        "Regression Algorithms",
+        "RandomizedSearchCV",
+        "Plotly"
+      ],
+      "slug": "automl-ify-automate-your-machine-learning-pipeline-effortlessly",
+      "links": {
+        "github": "https://github.com",
+        "live": ""
+      }
+    },
+    {
+      "title": "MLOps Weather Prediction",
+      "subtitle": "",
+      "period": "Dec 2023 - Jun 2024",
+      "description": "Deployed an XGBoost forecasting microservice that achieved a Mean Absolute Error of 2 degrees C and scaled to handle over 1,000 requests per hour. Established an automated, MLflow-driven retraining workflow that monitored and corrected for concept drift, reducing prediction error drift by 20% over a 6-month period.",
+      "problem": "Need for a scalable weather prediction service and a robust MLOps workflow to handle concept drift.",
+      "approach": "Deployed an XGBoost forecasting microservice and implemented an automated, MLflow-driven retraining workflow for concept drift monitoring and correction.",
+      "results": [
+        "Achieved a Mean Absolute Error of 2 degrees C",
+        "Scaled to handle over 1,000 requests per hour",
+        "Reduced prediction error drift by 20% over a 6-month period"
+      ],
+      "techStack": [
+        "MLOps",
+        "XGBoost",
+        "Forecasting",
+        "Microservice",
+        "MLflow",
+        "Concept Drift"
+      ],
+      "slug": "mlops-weather-prediction",
+      "links": {
+        "github": "https://github.com",
+        "live": ""
+      }
+    }
+  ],
+  "education": [
+    {
+      "school": "University of Wisconsin - Madison",
+      "degree": "M.S. Data Science",
+      "period": "Sept 2023 - May 2025",
+      "location": "",
+      "highlights": [
+        "GPA: 3.70/4.0"
+      ]
+    },
+    {
+      "school": "Indian Institute of Information Technology",
+      "degree": "B.Tech. Computer Science",
+      "period": "Aug 2019 - May 2023",
+      "location": "",
+      "highlights": [
+        "GPA: 9.15/10.0"
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Google Cloud 3x Certified – Professional Machine Learning Engineer, Professional Data Engineer, Associate Cloud Engineer",
+      "issuer": "Google Cloud",
+      "date": "",
+      "link": ""
+    }
+  ]
 }

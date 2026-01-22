@@ -188,7 +188,7 @@ async function fetchResume() {
         const pdfBuffer = Buffer.from(response.data);
         // Standardized to gemini-2.0-flash-lite with temperature 0 for deterministic extraction
         const model = genAI.getGenerativeModel({
-            model: "gemini-2.0-flash-lite",
+            model: "gemini-2.5-flash-lite",
             generationConfig: { temperature: 0 }
         }, { apiVersion: 'v1' });
 
