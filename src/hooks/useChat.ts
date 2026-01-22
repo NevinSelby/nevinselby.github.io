@@ -78,6 +78,26 @@ const createCoreIndex = () => {
         });
     });
 
+    // Education
+    data.education.forEach(e => {
+        index.push({
+            type: 'Education',
+            title: `${e.degree} at ${e.school}`,
+            content: `${e.school} ${e.degree} ${e.period} ${e.location} ${(e.highlights || []).join(' ')}`,
+            path: '/about'
+        });
+    });
+
+    // Certifications
+    (data.certifications || []).forEach(c => {
+        index.push({
+            type: 'Certification',
+            title: c.name,
+            content: `${c.name} issued by ${c.issuer} on ${c.date}`,
+            path: c.link || '/about'
+        });
+    });
+
     return index;
 };
 

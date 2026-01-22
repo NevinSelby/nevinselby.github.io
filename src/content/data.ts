@@ -3,7 +3,17 @@ import type { ContentData } from './types';
 // @ts-ignore
 import dynamicData from './dynamic.json';
 
-const { videos, articles, publications, githubRepos, skills: dynamicSkills, projects: dynamicProjects, experience: dynamicExperience } = dynamicData as any || {};
+const {
+    videos,
+    articles,
+    publications,
+    githubRepos,
+    skills: dynamicSkills,
+    projects: dynamicProjects,
+    experience: dynamicExperience,
+    education: dynamicEducation,
+    certifications: dynamicCertifications
+} = dynamicData as any || {};
 
 // Static data definition (merged from previous file state)
 const staticData = {
@@ -213,6 +223,15 @@ const staticData = {
             tags: ["Finance"],
             link: "https://iterai.beehiiv.com/p/practical-financial-planning"
         }
+    ],
+    education: [
+        {
+            school: "University of Wisconsin-Madison",
+            degree: "Master of Science in Data Science",
+            period: "2024 – 2025",
+            location: "Madison, WI",
+            highlights: ["Focus on ML Infrastructure and Cloud Systems"]
+        }
     ]
 };
 
@@ -240,5 +259,7 @@ export const data: ContentData = {
             }
         };
     }).concat(dynamicProjects?.length > 0 ? [] : staticData.projects),
-    experience: dynamicExperience?.length > 0 ? dynamicExperience : staticData.experience
+    experience: dynamicExperience?.length > 0 ? dynamicExperience : staticData.experience,
+    education: dynamicEducation?.length > 0 ? dynamicEducation : staticData.education,
+    certifications: dynamicCertifications || []
 };

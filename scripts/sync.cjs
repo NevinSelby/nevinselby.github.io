@@ -186,8 +186,9 @@ async function fetchResume() {
         });
 
         const pdfBuffer = Buffer.from(response.data);
-        // Using stable gemini-1.5-flash as the primary extraction engine
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        // Using stable gemini-1.5-flash with v1 API to avoid v1beta mismatch errors
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }, { apiVersion: "v1" });
+        // const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" }, { apiVersion: "v1" }); // Option for later
 
         const prompt = `Act as an expert career assistant. Extract the following information from this resume and return it as a single JSON object.
 
@@ -208,6 +209,8 @@ async function fetchResume() {
         1. experience: Array of objects (role, company, location, period, description (array of sentences), highlights (array of key achievements), slug (kebab-case company name)).
         2. skills: Array of objects (category, skills (array)).
         3. projects: Array of objects (title, subtitle, period, description (string summary), problem, approach, results (array), techStack (array), slug (kebab-case project name), links: { github, live }).
+        4. education: Array of objects (school, degree, period, location, highlights (array)).
+        5. certifications: Array of objects (name, issuer, date, link).
         
         ONLY return the JSON object. Do not include markdown code blocks or any introductory text.`;
 
@@ -250,7 +253,9 @@ async function fetchResume() {
             return {
                 experience: cleanExperience,
                 skills: extracted.skills || [],
-                projects: cleanProjects
+                projects: cleanProjects,
+                education: extracted.education || [],
+                certifications: extracted.certifications || []
             };
         } catch (parseErr) {
             console.warn('  JSON parse failed, checking for fallback match...');
@@ -260,14 +265,16 @@ async function fetchResume() {
                 return {
                     experience: (extracted.experience || []).map(exp => ({ ...exp, slug: exp.slug || exp.company.toLowerCase().replace(/[^a-z0-9]+/g, '-') })),
                     skills: extracted.skills || [],
-                    projects: (extracted.projects || []).map(p => ({ ...p, slug: p.slug || p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'), links: { github: "", live: "" } }))
+                    projects: (extracted.projects || []).map(p => ({ ...p, slug: p.slug || p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'), links: { github: "", live: "" } })),
+                    education: extracted.education || [],
+                    certifications: extracted.certifications || []
                 };
             }
         }
-        return { experience: [], skills: [], projects: [] };
+        return { experience: [], skills: [], projects: [], education: [], certifications: [] };
     } catch (e) {
         console.error('Resume Deep Extraction Failed:', e.message);
-        return { experience: [], skills: [], projects: [] };
+        return { experience: [], skills: [], projects: [], education: [], certifications: [] };
     }
 }
 
@@ -293,7 +300,9 @@ async function main() {
             githubRepos,
             experience: resumeData.experience || [],
             skills: resumeData.skills || [],
-            projects: resumeData.projects || []
+            projects: resumeData.projects || [],
+            education: resumeData.education || [],
+            certifications: resumeData.certifications || []
         };
 
         fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2));

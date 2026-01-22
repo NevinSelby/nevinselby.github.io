@@ -73,12 +73,29 @@ export interface Publication {
     link: string;
 }
 
+export interface Education {
+    school: string;
+    degree: string;
+    period: string;
+    location: string;
+    highlights?: string[];
+}
+
+export interface Certification {
+    name: string;
+    issuer: string;
+    date: string;
+    link?: string;
+}
+
 export interface ContentData {
     profile: Profile;
     skills: SkillCategory[];
     experience: Experience[];
     projects: Project[];
     publications: Publication[];
+    education: Education[];
+    certifications?: Certification[];
     articles?: Article[];
     videos?: Video[];
     githubRepos?: GithubRepo[];
