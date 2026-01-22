@@ -186,8 +186,11 @@ async function fetchResume() {
         });
 
         const pdfBuffer = Buffer.from(response.data);
-        // Using stable gemini-1.5-flash with v1 API
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }, { apiVersion: 'v1' });
+        // Standardized to gemini-2.0-flash-lite with temperature 0 for deterministic extraction
+        const model = genAI.getGenerativeModel({
+            model: "gemini-2.0-flash-lite",
+            generationConfig: { temperature: 0 }
+        }, { apiVersion: 'v1' });
 
         const prompt = `Act as an expert career assistant. Extract the following information from this resume and return it as a single JSON object.
 
