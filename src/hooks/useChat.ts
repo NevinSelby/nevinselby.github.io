@@ -17,24 +17,28 @@ interface Message {
 const createCoreIndex = () => {
     const index: any[] = [];
 
-    // Projects
-    data.projects.forEach(p => {
-        index.push({
-            type: 'Project',
-            title: p.title,
-            content: `${p.description} ${p.problem} ${p.approach} ${p.results.join(' ')} ${p.techStack.join(' ')}`,
-            path: `/projects/${p.slug}`,
-            slug: p.slug
-        });
-    });
-
     // Experience
     data.experience.forEach(e => {
+        const descStr = Array.isArray(e.description) ? e.description.join(' ') : (e.description || "");
+        const highlightStr = (e.highlights || []).join(' ');
         index.push({
             type: 'Experience',
             title: `${e.role} at ${e.company}`,
-            content: `${e.description.join(' ')} ${e.highlights.join(' ')}`,
+            content: `${e.company} - ${e.role} (${e.period}). ${descStr} ${highlightStr}`,
             path: `/experience/${e.slug}`
+        });
+    });
+
+    // Projects
+    data.projects.forEach(p => {
+        const resultStr = (p.results || []).join(' ');
+        const techStr = (p.techStack || []).join(' ');
+        index.push({
+            type: 'Project',
+            title: p.title,
+            content: `${p.title}: ${p.subtitle}. Problem: ${p.problem}. Approach: ${p.approach}. Results: ${resultStr}. Stack: ${techStr}`,
+            path: `/projects/${p.slug}`,
+            slug: p.slug
         });
     });
 
@@ -103,14 +107,14 @@ const createCoreIndex = () => {
 
 const createContentIndex = () => {
     const index: any[] = [];
-    // Newsletter (Scraped Data)
+    // Newsletter (Dynamic Data)
     if (data.articles) {
         data.articles.forEach(article => {
             index.push({
                 type: 'Newsletter',
                 title: article.title,
-                content: `${article.summary} ${article.content || ''} ${article.tags.join(' ')}`,
-                path: article.link // Direct external link
+                content: `Title: ${article.title}. Summary: ${article.summary}. Tags: ${article.tags.join(', ')}. Date: ${article.date}.`,
+                path: article.link
             });
         });
     }

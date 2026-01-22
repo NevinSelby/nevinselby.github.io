@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-01-22T05:55:37.091Z",
+  "lastUpdated": "2026-01-22T05:56:30.176Z",
   "videos": [
     {
       "title": "From Losing My Phone to Seeing a Celebrity | F1 Student's first Ski Trip",
@@ -120,16 +120,16 @@
   ],
   "githubRepos": [
     {
-      "name": "nevinselby.github.io",
-      "html_url": "https://github.com/NevinSelby/nevinselby.github.io",
+      "name": "NevinSelby-Portfolio",
+      "html_url": "https://github.com/NevinSelby/NevinSelby-Portfolio",
       "description": "",
       "language": "TypeScript",
       "stargazers_count": 0,
       "updated_at": "Jan 21, 2026"
     },
     {
-      "name": "NevinSelby-Portfolio",
-      "html_url": "https://github.com/NevinSelby/NevinSelby-Portfolio",
+      "name": "nevinselby.github.io",
+      "html_url": "https://github.com/NevinSelby/nevinselby.github.io",
       "description": "",
       "language": "TypeScript",
       "stargazers_count": 0,
