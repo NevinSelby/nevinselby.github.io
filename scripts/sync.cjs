@@ -186,8 +186,8 @@ async function fetchResume() {
         });
 
         const pdfBuffer = Buffer.from(response.data);
-        // Using stable gemini-2.0-flash with v1 API to match working chat config
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" }, { apiVersion: "v1" });
+        // Using stable gemini-1.5-flash as the primary extraction engine
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const prompt = `Act as an expert career assistant. Extract the following information from this resume and return it as a single JSON object.
 
