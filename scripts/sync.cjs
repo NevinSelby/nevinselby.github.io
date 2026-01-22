@@ -97,28 +97,41 @@ async function fetchScholar() {
         console.log(`Fetching Google Scholar Profile (${SCHOLAR_USER_ID})...`);
         const profileUrl = `https://scholar.google.com/citations?user=${SCHOLAR_USER_ID}&hl=en`;
         const { data: profileData } = await axios.get(profileUrl, {
-            headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0' }
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.9'
+            }
         });
         const $ = cheerio.load(profileData);
         const publications = [];
 
-        $('tr.gsc_a_tr').each((i, el) => {
-            const title = $(el).find('a.gsc_a_at').text().trim();
-            const link = 'https://scholar.google.com' + $(el).find('a.gsc_a_at').attr('href');
-            const summary = $(el).find('.gsc_a_at + .gs_gray').first().text().trim(); // Authors
+        // Scholar uses a table with class gsc_a_tr
+        const rows = $('tr.gsc_a_tr');
+        console.log(`  Found ${rows.length} rows in Scholar table.`);
+
+        rows.each((i, el) => {
+            const $link = $(el).find('a.gsc_a_at');
+            const title = $link.text().trim();
+            const href = $link.attr('href');
+            const link = href ? 'https://scholar.google.com' + href : '#';
+            const authors = $(el).find('.gsc_a_at + .gs_gray').first().text().trim();
+            const venue = $(el).find('.gsc_a_at + .gs_gray').last().text().trim();
 
             if (title) {
                 publications.push({
                     title,
-                    summary: summary,
+                    summary: `${authors}. ${venue}`.trim(),
                     link
                 });
             }
         });
-        return publications.slice(0, 5);
+
+        console.log(`  Extracted ${publications.length} publications.`);
+        return publications.slice(0, 10);
 
     } catch (e) {
-        console.error('Scholar Fetch Failed:', e.message);
+        console.error('Scholar Fetch Failed (likely rate-limited or blocked):', e.message);
         return [];
     }
 }
@@ -126,16 +139,20 @@ async function fetchScholar() {
 async function fetchGithubRepos() {
     try {
         console.log('Fetching GitHub Repos...');
-        // Fetch up to 100 public repos, sorted by update time
-        const { data } = await axios.get('https://api.github.com/users/NevinSelby/repos?sort=updated&per_page=100type=public', {
-            headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0' }
+        // Fixed URL: added & between per_page and type
+        const { data } = await axios.get('https://api.github.com/users/NevinSelby/repos?sort=updated&per_page=100&type=public', {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0',
+                // Optional: add Authorization header if rate limited in CI
+                ...(process.env.GITHUB_TOKEN ? { 'Authorization': `token ${process.env.GITHUB_TOKEN}` } : {})
+            }
         });
 
         return data.map(repo => ({
             name: repo.name,
             html_url: repo.html_url,
-            description: repo.description,
-            language: repo.language,
+            description: repo.description || "",
+            language: repo.language || "TypeScript",
             stargazers_count: repo.stargazers_count,
             updated_at: new Date(repo.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
         }));
@@ -146,10 +163,16 @@ async function fetchGithubRepos() {
 }
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const genAI = new GoogleGenerativeAI(process.env.VITE_GEMINI_API_KEY);
 
 async function fetchResume() {
+    if (!process.env.VITE_GEMINI_API_KEY) {
+        console.warn('VITE_GEMINI_API_KEY not found, skipping resume deep extraction.');
+        return { experience: [], skills: [], projects: [] };
+    }
+
+    const genAI = new GoogleGenerativeAI(process.env.VITE_GEMINI_API_KEY);
     const RESUME_URL = 'https://drive.google.com/uc?export=download&id=1_qjyKLFq1ikr0IbLCwDZBr5Z0boTD7e1';
+
     try {
         console.log('Fetching & Parsing Resume (Deep Extraction)...');
         const response = await axios({
@@ -163,7 +186,8 @@ async function fetchResume() {
         });
 
         const pdfBuffer = Buffer.from(response.data);
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        // Corrected Model Version: gemini-1.5-flash is stable and fast
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const prompt = `Act as an expert career assistant. Extract the following information from this resume and return it as a single JSON object.
 
@@ -199,6 +223,7 @@ async function fetchResume() {
 
         const text = result.response.text();
         console.log(`  Raw AI Response (first 100 chars): ${text.substring(0, 100)}...`);
+
         try {
             const cleanText = text.replace(/```json|```/g, '').trim();
             const extracted = JSON.parse(cleanText);
@@ -232,7 +257,6 @@ async function fetchResume() {
             const jsonMatch = text.match(/\{[\s\S]*\}/);
             if (jsonMatch) {
                 const extracted = JSON.parse(jsonMatch[0]);
-                // Apply same cleaning for fallback
                 return {
                     experience: (extracted.experience || []).map(exp => ({ ...exp, slug: exp.slug || exp.company.toLowerCase().replace(/[^a-z0-9]+/g, '-') })),
                     skills: extracted.skills || [],
@@ -248,12 +272,18 @@ async function fetchResume() {
 }
 
 async function main() {
+    console.log('Starting Full Data Orchestration Sync...');
+    const startTime = Date.now();
+
     try {
-        const videos = await fetchYouTube();
-        const articles = await fetchBeehiiv();
-        const publications = await fetchScholar();
-        const githubRepos = await fetchGithubRepos();
-        const resumeData = await fetchResume();
+        // Run all fetches in parallel for maximum efficiency
+        const [videos, articles, publications, githubRepos, resumeData] = await Promise.all([
+            fetchYouTube(),
+            fetchBeehiiv(),
+            fetchScholar(),
+            fetchGithubRepos(),
+            fetchResume()
+        ]);
 
         const output = {
             lastUpdated: new Date().toISOString(),
@@ -267,7 +297,8 @@ async function main() {
         };
 
         fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2));
-        console.log(`Dynamic content updated at ${OUTPUT_FILE}`);
+        const duration = ((Date.now() - startTime) / 1000).toFixed(2);
+        console.log(`\n✅ Dynamic content updated at ${OUTPUT_FILE} in ${duration}s`);
     } catch (error) {
         console.error('FATAL: Sync process failed partially but continuing with partial data:', error.message);
     }

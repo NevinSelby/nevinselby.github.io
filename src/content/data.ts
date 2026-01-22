@@ -217,7 +217,7 @@ export const data: ContentData = {
     ...staticData,
     videos: videos || [],
     articles: articles || [],
-    publications: publications || staticData.publications,
+    publications: (publications && publications.length > 0) ? publications : staticData.publications,
     githubRepos: githubRepos || [],
     skills: dynamicSkills?.length > 0 ? dynamicSkills : staticData.skills,
     projects: (dynamicProjects || []).map((dp: any) => {
