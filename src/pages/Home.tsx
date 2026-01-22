@@ -52,7 +52,7 @@ const Home = () => {
                         </Link>
 
                         <a
-                            href="/resume.pdf"
+                            href={profile.resume}
                             target="_blank"
                             rel="noopener noreferrer"
                             className={buttonVariants({ variant: 'outline', size: 'lg' })}

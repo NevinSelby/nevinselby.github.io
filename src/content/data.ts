@@ -25,7 +25,8 @@ const staticData = {
         email: "nevinselby2001@gmail.com",
         phone: "+1 (608) 239-6451",
         website: "nevinselby.github.io",
-        linkedin: "linkedin.com/in/nevinselby",
+        linkedin: "https://linkedin.com/in/nevinselby",
+        resume: "https://drive.google.com/file/d/1_qjyKLFq1ikr0IbLCwDZBr5Z0boTD7e1/view",
         social: {
             youtube: "https://youtube.com/@NevinSelby",
             instagram: "https://instagram.com/nevinselby",
@@ -149,12 +150,12 @@ const staticData = {
         {
             title: "An Efficient Stock Price Prediction Mechanism Using Multivariate Sequential LSTM Autoencoder",
             summary: "Explored novel architectures for stock market forecasting using deep learning, achieving significant improvements in predictive accuracy over baseline models.",
-            link: "#"
+            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:u-x6o8ySG0sC"
         },
         {
             title: "Advantage Actor-Critic Reinforcement Learning with Technical Indicators for Stock Trading Decisions",
             summary: "Applied reinforcement learning techniques combined with traditional technical analysis to optimize algorithmic trading strategies.",
-            link: "#"
+            link: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:u5HHmBy_u04C"
         }
     ],
     articles: [
