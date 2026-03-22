@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2026-01-22T06:16:00.021Z",
+  "lastUpdated": "2026-03-22T01:35:13.565Z",
   "videos": [
     {
       "title": "From Losing My Phone to Seeing a Celebrity | F1 Student's first Ski Trip",
       "link": "https://www.youtube.com/watch?v=uMlc6GwK3EU",
-      "date": "Jan 15, 2026",
+      "date": "Jan 16, 2026",
       "thumbnail": "https://i.ytimg.com/vi/uMlc6GwK3EU/hqdefault.jpg",
       "views": "Watch on YouTube"
     },
@@ -18,7 +18,7 @@
     {
       "title": "Aesthetic Travel Vibes: Short Trip Edition ✈️✨#travelaesthetic #travelvlog #travel #wanderlust",
       "link": "https://www.youtube.com/shorts/rOJ3HsV4KC0",
-      "date": "Jan 6, 2025",
+      "date": "Jan 7, 2025",
       "thumbnail": "https://i.ytimg.com/vi/rOJ3HsV4KC0/hqdefault.jpg",
       "views": "Watch on YouTube"
     },
@@ -32,92 +32,48 @@
     {
       "title": "🎥 Chicago Concert Vlog | Ayushmann Khurrana Live Experience 🇮🇳🎶",
       "link": "https://www.youtube.com/watch?v=gU6TfnBo5bM",
-      "date": "Nov 26, 2024",
+      "date": "Nov 27, 2024",
       "thumbnail": "https://i.ytimg.com/vi/gU6TfnBo5bM/hqdefault.jpg",
       "views": "Watch on YouTube"
     },
     {
       "title": "Pehla Intro (Will improve as I learn more 😉)",
       "link": "https://www.youtube.com/watch?v=P4vpeoBWm4s",
-      "date": "Oct 1, 2024",
+      "date": "Oct 2, 2024",
       "thumbnail": "https://i.ytimg.com/vi/P4vpeoBWm4s/hqdefault.jpg",
       "views": "Watch on YouTube"
     }
   ],
   "articles": [
     {
-      "title": "How F‐1 Students Can Safely Start Investing in the US (Without Messing Up Their Visa or Taxes)",
-      "link": "https://iterai.beehiiv.com/p/how-f-1-students-can-safely-start-investing-in-the-us-without-messing-up-their-visa-or-taxes",
-      "summary": "A guide to how F‐1 visa holders can invest in US stocks, what’s actually allowed, what to watch out for, and how apps like Robinhood fit into the picture.Jan 21, 2026",
+      "title": "You still have to file US taxes, even as an F‐1 student",
+      "link": "https://iterai.beehiiv.com/p/you-still-have-to-file-us-taxes-even-as-an-f-1-student",
+      "summary": "Mar 11, 2026•10 min readThis is the guide I wish someone had handed me in that first year.",
       "date": "2026",
       "tags": [
         "Finance"
       ]
     },
     {
-      "title": "Understanding 401(k), IRA, Roth IRA, Regular Investing, and HSA in Plain Language",
-      "link": "https://iterai.beehiiv.com/p/understanding-401-k-ira-roth-ira-regular-investing-and-hsa-in-plain-language",
-      "summary": "This guide walks through five common buckets in simple terms: 401(k), traditional IRA, Roth IRA, regular taxable investing, and HSA. Jan 14, 2026",
+      "title": "How I Actually Use Credit Cards as an F‐1 (Without Going Broke)",
+      "link": "https://iterai.beehiiv.com/p/how-i-actually-use-credit-cards-as-an-f-1-without-going-broke",
+      "summary": "Mar 8, 2026•10 min readCredit cards can feel like a mix of magic and danger",
       "date": "2026",
       "tags": [
-        "AI",
-        "Finance"
+        "General"
       ]
     },
     {
-      "title": "“Sleep at Night” Investing: Designing a Plan You Can Emotionally Handle",
-      "link": "https://iterai.beehiiv.com/p/sleep-at-night-investing-designing-a-plan-you-can-emotionally-handle",
-      "summary": "Jan 7, 2026",
+      "title": "Building a Basic US Credit Score While Staying Visa‐Safe",
+      "link": "https://iterai.beehiiv.com/p/building-a-basic-us-credit-score-while-staying-visa-safe",
+      "summary": "Feb 25, 2026•10 min readThis is a detailed, human guide to what a US credit score is, why it matters, low‐risk ways to build it as an F‐1, and how to keep everything visa‐safe and clean when you eventually move or leave.",
       "date": "2026",
       "tags": [
-        "Finance",
-        "Psychology"
-      ]
-    },
-    {
-      "title": "Before You Use AI to Invest, Learn the Basics of Investing",
-      "link": "https://iterai.beehiiv.com/p/before-you-use-ai-to-invest-learn-the-basics-of-investing",
-      "summary": "Dec 31, 2025",
-      "date": "2026",
-      "tags": [
-        "AI",
-        "Finance",
-        "Psychology"
-      ]
-    },
-    {
-      "title": "Agents vs Traditional Automation in Finance",
-      "link": "https://iterai.beehiiv.com/p/agents-vs-traditional-automation-in-finance",
-      "summary": "It is about understanding where simple rules are enough and where real context and judgment start to matterDec 24, 2025",
-      "date": "2026",
-      "tags": [
-        "AI",
-        "Finance"
+        "AI"
       ]
     }
   ],
-  "publications": [
-    {
-      "title": "An efficient stock price prediction mechanism using multivariate sequential LSTM autoencoder",
-      "summary": "N Selby, A Taparia. N Selby, A Taparia",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:u5HHmVD_uO8C"
-    },
-    {
-      "title": "An Efficient Stock Price Prediction Mechanism Using Multivariate Sequential LSTM Autoencoder",
-      "summary": "G RML, N Selby, A Taparia. G RML, N Selby, A Taparia",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:d1gkVwhDpl0C"
-    },
-    {
-      "title": "Multi-sequential Neural Network Models for Stock Price Forecasting",
-      "summary": "JV Sheba Elizabeth Thomas, Rubell Marion Lincy George, Aditya Taparia. JV Sheba Elizabeth Thomas, Rubell Marion Lincy George, Aditya Taparia",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:9yKSN-GCB0IC"
-    },
-    {
-      "title": "Advantage Actor-Critic Reinforcement Learning with Technical Indicators for Stock Trading Decisions",
-      "summary": "S Sagar, V Narayanan, D Binu, N Selby, SE Thomas. S Sagar, V Narayanan, D Binu, N Selby, SE Thomas",
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h7tbBssAAAAJ&citation_for_view=h7tbBssAAAAJ:u-x6o8ySG0sC"
-    }
-  ],
+  "publications": [],
   "githubRepos": [
     {
       "name": "nevinselby.github.io",
@@ -141,7 +97,7 @@
       "description": "",
       "language": "TypeScript",
       "stargazers_count": 0,
-      "updated_at": "Nov 6, 2025"
+      "updated_at": "Nov 7, 2025"
     },
     {
       "name": "JekyllPortfolio",
@@ -149,7 +105,7 @@
       "description": "Github Pages template for academic personal websites, forked from mmistakes/minimal-mistakes",
       "language": "TypeScript",
       "stargazers_count": 0,
-      "updated_at": "Aug 6, 2025"
+      "updated_at": "Aug 7, 2025"
     },
     {
       "name": "NevinSelby",
@@ -165,7 +121,7 @@
       "description": "",
       "language": "JavaScript",
       "stargazers_count": 0,
-      "updated_at": "Jul 27, 2025"
+      "updated_at": "Jul 28, 2025"
     },
     {
       "name": "JobCrawler",
@@ -213,7 +169,7 @@
       "description": "BERT-based multi-task learning system that analyzes Starbuck's reviews by simultaneously classifying review attributes (food, service, etc) and sentiment (positive/negative/neutral). Features shared neural network layers for efficiency with task-specific classification heads.",
       "language": "Python",
       "stargazers_count": 0,
-      "updated_at": "Apr 30, 2025"
+      "updated_at": "May 1, 2025"
     },
     {
       "name": "ai-data-science-team",
@@ -261,7 +217,7 @@
       "description": "",
       "language": "CSS",
       "stargazers_count": 0,
-      "updated_at": "Jan 20, 2024"
+      "updated_at": "Jan 21, 2024"
     },
     {
       "name": "Fetch_Task",
@@ -285,7 +241,7 @@
       "description": "",
       "language": "TypeScript",
       "stargazers_count": 0,
-      "updated_at": "Dec 1, 2022"
+      "updated_at": "Dec 2, 2022"
     },
     {
       "name": "relataly-public-python-tutorials",
@@ -325,7 +281,7 @@
       "description": "",
       "language": "Jupyter Notebook",
       "stargazers_count": 0,
-      "updated_at": "Feb 16, 2022"
+      "updated_at": "Feb 17, 2022"
     },
     {
       "name": "E-Voting-Using-Blockchain",
@@ -523,18 +479,18 @@
       "period": "Jun 2024 - Feb 2025",
       "description": "Launched a no-code AutoML tool to automate EDA, model selection, and tuning, reducing initial machine learning project setup time from 4 hours to 30 minutes. Integrated over 10 classification and regression algorithms with RandomizedSearchCV and Plotly visualizations, improving baseline validation AUC by an average of 8%.",
       "problem": "High initial setup time for machine learning projects and the need for automated model selection and tuning.",
-      "approach": "Developed a no-code AutoML tool integrating multiple classification and regression algorithms with RandomizedSearchCV and Plotly visualizations.",
+      "approach": "Developed a no-code AutoML tool integrating EDA, model selection, and tuning capabilities. Incorporated over 10 classification and regression algorithms with RandomizedSearchCV and Plotly visualizations.",
       "results": [
-        "Reduced initial machine learning project setup time from 4 hours to 30 minutes",
-        "Improved baseline validation AUC by an average of 8%"
+        "Reduced initial machine learning project setup time from 4 hours to 30 minutes.",
+        "Improved baseline validation AUC by an average of 8%."
       ],
       "techStack": [
         "AutoML",
         "EDA",
         "Model Selection",
         "Model Tuning",
-        "Classification Algorithms",
-        "Regression Algorithms",
+        "Classification",
+        "Regression",
         "RandomizedSearchCV",
         "Plotly"
       ],
@@ -549,12 +505,12 @@
       "subtitle": "",
       "period": "Dec 2023 - Jun 2024",
       "description": "Deployed an XGBoost forecasting microservice that achieved a Mean Absolute Error of 2 degrees C and scaled to handle over 1,000 requests per hour. Established an automated, MLflow-driven retraining workflow that monitored and corrected for concept drift, reducing prediction error drift by 20% over a 6-month period.",
-      "problem": "Need for a scalable weather prediction service and a robust MLOps workflow to handle concept drift.",
-      "approach": "Deployed an XGBoost forecasting microservice and implemented an automated, MLflow-driven retraining workflow for concept drift monitoring and correction.",
+      "problem": "Need for a scalable weather prediction service with automated retraining to handle concept drift and maintain accuracy.",
+      "approach": "Deployed an XGBoost forecasting microservice and implemented an MLflow-driven automated retraining workflow to monitor and correct for concept drift.",
       "results": [
-        "Achieved a Mean Absolute Error of 2 degrees C",
-        "Scaled to handle over 1,000 requests per hour",
-        "Reduced prediction error drift by 20% over a 6-month period"
+        "Achieved a Mean Absolute Error of 2 degrees C.",
+        "Scaled to handle over 1,000 requests per hour.",
+        "Reduced prediction error drift by 20% over a 6-month period."
       ],
       "techStack": [
         "MLOps",
@@ -593,7 +549,19 @@
   ],
   "certifications": [
     {
-      "name": "Google Cloud 3x Certified – Professional Machine Learning Engineer, Professional Data Engineer, Associate Cloud Engineer",
+      "name": "Professional Machine Learning Engineer",
+      "issuer": "Google Cloud",
+      "date": "",
+      "link": ""
+    },
+    {
+      "name": "Professional Data Engineer",
+      "issuer": "Google Cloud",
+      "date": "",
+      "link": ""
+    },
+    {
+      "name": "Associate Cloud Engineer",
       "issuer": "Google Cloud",
       "date": "",
       "link": ""
